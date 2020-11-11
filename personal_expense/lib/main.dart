@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './Widget/userTransaction.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,13 +14,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Personal Expense'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
   final String title;
+
   MyHomePage({this.title});
 
   @override
@@ -28,11 +30,22 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: (Column(children: <Widget>[
-        Card(),
-        Card(),
-        Card(),
-      ])),
+      body: (Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            child: Card(
+              color: Colors.blue,
+              elevation: 10,
+              child: Text('Chart'),
+            ),
+          ),
+          Card(
+            child: UserTransactions(),
+          ),
+        ],
+      )),
     );
   }
 }
