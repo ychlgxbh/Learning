@@ -28,9 +28,11 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: (Center(
-        child: Text('Widgets playground.'),
-      )),
+      body: (Column(children: <Widget>[
+        Card(),
+        Card(),
+        Card(),
+      ])),
     );
   }
 }
