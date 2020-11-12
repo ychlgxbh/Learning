@@ -1,21 +1,30 @@
 
 import 'package:flutter/material.dart';
 
-class CreateTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+class CreateTransaction extends StatefulWidget {
   final Function add;
 
   CreateTransaction(this.add);
+
+  @override
+  _CreateTransactionState createState() => _CreateTransactionState();
+}
+
+class _CreateTransactionState extends State<CreateTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
 
   void submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.tryParse(amountController.text);
     if (enteredTitle.isNotEmpty && enteredAmount != null && enteredAmount > 0) {
-      add(enteredTitle, enteredAmount);
+      widget.add(enteredTitle, enteredAmount);
     }
     print(enteredAmount);
     print(enteredTitle);
+    Navigator.of(context).pop();
+    // turn off the modal sheet on finishing
   }
 
   @override
