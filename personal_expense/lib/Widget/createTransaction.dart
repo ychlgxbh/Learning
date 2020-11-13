@@ -75,7 +75,7 @@ class _CreateTransactionState extends State<CreateTransaction> {
               child: Container(
                 child: TextField(
                   style: TextStyle(
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                   ),
                   decoration: InputDecoration(
                     labelText: 'Amount',
