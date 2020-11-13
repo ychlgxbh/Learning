@@ -18,12 +18,15 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: 'QuickSand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            headline6: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
+            button: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
@@ -81,15 +84,23 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(String txTitle, double txAmount, DateTime dateTime) {
     final tx = Transaction(
       amount: txAmount,
-      date: DateTime.now(),
+      date: dateTime,
       title: txTitle,
-      id: (_transactions.length + 1).toString(),
+      id: DateTime.now().toString(),
     );
     setState(() {
       _transactions.add(tx);
+    });
+  }
+
+  void deleteTransaction(String transactionId) {
+    setState(() {
+      _transactions.removeWhere((tr) {
+        return tr.id == transactionId;
+      });
     });
   }
 
@@ -114,16 +125,24 @@ class _MyHomePageState extends State<MyHomePage> {
           _startTransactionCreationProcess(context);
         },
       ),
-      body: SingleChildScrollView(
-        child: (Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Chart(_recentTransactions),
-            Card(
-              child: TransactionList(_transactions),
-            ),
-          ],
-        )),
+      body: ListView(
+        children: <Widget>[
+          (Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Chart(_recentTransactions),
+              Card(
+                child: TransactionList(
+                  _transactions,
+                  deleteTransaction,
+                ),
+              ),
+            ],
+          )),
+          SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }
