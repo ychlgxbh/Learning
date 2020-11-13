@@ -106,18 +106,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text(widget.title),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            _startTransactionCreationProcess(context);
+          },
+        ),
+      ],
+    );
+
+    final bodyHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              _startTransactionCreationProcess(context);
-            },
-          ),
-        ],
-      ),
+      appBar: appBar,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -130,18 +135,21 @@ class _MyHomePageState extends State<MyHomePage> {
           (Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Chart(_recentTransactions),
-              Card(
-                child: TransactionList(
-                  _transactions,
-                  deleteTransaction,
+              Container(
+                height: bodyHeight * 0.3,
+                child: Chart(_recentTransactions),
+              ),
+              Container(
+                height: bodyHeight * 0.55,
+                child: Card(
+                  child: TransactionList(
+                    _transactions,
+                    deleteTransaction,
+                  ),
                 ),
               ),
             ],
           )),
-          SizedBox(
-            height: 50,
-          ),
         ],
       ),
     );
