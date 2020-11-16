@@ -14,21 +14,23 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: _transactions.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text('No transactions yet.'),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 200,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (ctx, cons) {
+              return Column(
+                children: <Widget>[
+                  Text('No transactions yet.'),
+                  SizedBox(
+                    height: cons.maxHeight * 0.1,
                   ),
-                ),
-              ],
-            )
+                  Container(
+                    height: cons.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            })
           : ListView.builder(
               itemBuilder: (context, index) {
                 // return Card(
@@ -116,7 +118,9 @@ class TransactionList extends StatelessWidget {
                     trailing: IconButton(
                       icon: Icon(Icons.delete),
                       color: Theme.of(context).errorColor,
-                      onPressed: () {delete(_transactions[index].id);},
+                      onPressed: () {
+                        delete(_transactions[index].id);
+                      },
                     ),
                   ),
                 );

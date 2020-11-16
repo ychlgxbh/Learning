@@ -53,6 +53,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _transactions = [];
+
   void _startTransactionCreationProcess(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
@@ -60,21 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
           return CreateTransaction(_addNewTransaction);
         });
   }
-
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //   amount: 25.52,
-    //   title: 'food',
-    //   id: '1',
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   amount: 37.62,
-    //   title: 'petrol',
-    //   id: '2',
-    //   date: DateTime.now(),
-    // ),
-  ];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
@@ -104,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool _showChart = false;
+  
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
@@ -121,6 +110,20 @@ class _MyHomePageState extends State<MyHomePage> {
     final bodyHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
+
+    final transactionSection = Container(
+      height: bodyHeight * 0.55,
+      child: Card(
+        child: TransactionList(
+          _transactions,
+          deleteTransaction,
+        ),
+      ),
+    );
+
+    final isLandscape =
+        (MediaQuery.of(context).orientation == Orientation.landscape);
+
     return Scaffold(
       appBar: appBar,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -132,24 +135,41 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView(
         children: <Widget>[
-          (Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                height: bodyHeight * 0.3,
-                child: Chart(_recentTransactions),
-              ),
-              Container(
-                height: bodyHeight * 0.55,
-                child: Card(
-                  child: TransactionList(
-                    _transactions,
-                    deleteTransaction,
-                  ),
+          !isLandscape
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      height: bodyHeight * 0.3,
+                      child: Chart(_recentTransactions),
+                    ),
+                    transactionSection,
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text('Show chart'),
+                        Switch(
+                          value: _showChart,
+                          onChanged: (isOn) {
+                            setState(() {
+                              _showChart = isOn;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    _showChart
+                        ? Container(
+                            height: bodyHeight * 0.7,
+                            child: Chart(_recentTransactions),
+                          )
+                        : transactionSection,
+                  ],
                 ),
-              ),
-            ],
-          )),
         ],
       ),
     );
