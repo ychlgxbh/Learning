@@ -50,91 +50,105 @@ class _CreateTransactionState extends State<CreateTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    final _totalAvailableHeight = MediaQuery.of(context).size.height;
+    final _mediaQuerry = MediaQuery.of(context);
+    final _totalAvailableHeight = _mediaQuerry.size.height;
     final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+        _mediaQuerry.orientation == Orientation.landscape;
 
-    return Padding(
-      padding:
-          EdgeInsets.all(_totalAvailableHeight * (isLandscape ? 0.06 : 0.015)),
-      child: SingleChildScrollView(
-        child: Card(
-          elevation: _totalAvailableHeight * 0.03,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Card(
-                elevation: _totalAvailableHeight * 0.06,
-                child: Container(
-                  child: TextField(
-                    style: TextStyle(
-                      color: Colors.purple,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: isLandscape
+            ? EdgeInsets.only(
+                top: _totalAvailableHeight * 0.06,
+                left: _totalAvailableHeight * 0.06,
+                right: _totalAvailableHeight * 0.06,
+                bottom: _totalAvailableHeight * 0.06 +
+                    _mediaQuerry.viewInsets.bottom)
+            : EdgeInsets.only(
+                top: _totalAvailableHeight * 0.015,
+                left: _totalAvailableHeight * 0.015,
+                right: _totalAvailableHeight * 0.015,
+                bottom: _totalAvailableHeight * 0.015 +
+                    _mediaQuerry.viewInsets.bottom),
+        child: SingleChildScrollView(
+          child: Card(
+            elevation: _totalAvailableHeight * 0.03,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Card(
+                  elevation: _totalAvailableHeight * 0.06,
+                  child: Container(
+                    child: TextField(
+                      style: TextStyle(
+                        color: Colors.purple,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                        focusColor: Colors.blue,
+                      ),
+                      controller: titleController,
                     ),
-                    decoration: InputDecoration(
-                      labelText: 'Title',
-                      focusColor: Colors.blue,
-                    ),
-                    controller: titleController,
                   ),
                 ),
-              ),
-              Card(
-                elevation: _totalAvailableHeight * 0.06,
-                child: Container(
-                  child: TextField(
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                Card(
+                  elevation: _totalAvailableHeight * 0.06,
+                  child: Container(
+                    child: TextField(
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Amount',
+                        focusColor: Colors.blue,
+                      ),
+                      controller: amountController,
+                      keyboardType: TextInputType.number,
                     ),
-                    decoration: InputDecoration(
-                      labelText: 'Amount',
-                      focusColor: Colors.blue,
-                    ),
-                    controller: amountController,
-                    keyboardType: TextInputType.number,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: _totalAvailableHeight * 0.03,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Date you picked:',
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(_selectedDate != null
-                              ? DateFormat('yMMMMd').format(_selectedDate)
-                              : 'Date not chosen'),
-                        ),
-                        FlatButton(
-                          onPressed: _presentDatePicker,
-                          child: Text('Choose Date'),
-                          textColor: Theme.of(context).primaryColor,
-                        ),
-                      ],
-                    ),
-                  ],
+                SizedBox(
+                  height: _totalAvailableHeight * 0.03,
                 ),
-              ),
-              SizedBox(
-                height: _totalAvailableHeight * 0.03,
-              ),
-              RaisedButton(
-                onPressed: () {
-                  _submitData();
-                },
-                child: Text(
-                  'Add a new transaction',
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Date you picked:',
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(_selectedDate != null
+                                ? DateFormat('yMMMMd').format(_selectedDate)
+                                : 'Date not chosen'),
+                          ),
+                          FlatButton(
+                            onPressed: _presentDatePicker,
+                            child: Text('Choose Date'),
+                            textColor: Theme.of(context).primaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                color: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).textTheme.button.color,
-              ),
-            ],
+                SizedBox(
+                  height: _totalAvailableHeight * 0.03,
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    _submitData();
+                  },
+                  child: Text(
+                    'Add a new transaction',
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Theme.of(context).textTheme.button.color,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool _showChart = false;
-  
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
@@ -107,12 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final bodyHeight = MediaQuery.of(context).size.height -
+    final _mediaQuery = MediaQuery.of(context);
+    final _bodyHeight = _mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        _mediaQuery.padding.top;
 
     final transactionSection = Container(
-      height: bodyHeight * 0.55,
+      height: _bodyHeight * 0.55,
       child: Card(
         child: TransactionList(
           _transactions,
@@ -122,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     final isLandscape =
-        (MediaQuery.of(context).orientation == Orientation.landscape);
+        (_mediaQuery.orientation == Orientation.landscape);
 
     return Scaffold(
       appBar: appBar,
@@ -140,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Container(
-                      height: bodyHeight * 0.3,
+                      height: _bodyHeight * 0.3,
                       child: Chart(_recentTransactions),
                     ),
                     transactionSection,
@@ -164,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     _showChart
                         ? Container(
-                            height: bodyHeight * 0.7,
+                            height: _bodyHeight * 0.7,
                             child: Chart(_recentTransactions),
                           )
                         : transactionSection,
