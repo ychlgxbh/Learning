@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journey_page/CurvePainter.dart';
+import 'package:journey_page/flowCurve.dart';
+import 'package:journey_page/iconPosition.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,7 +49,12 @@ class _MyHomePageState extends State<MyHomePage> {
     final _mediaQuery = MediaQuery.of(context);
     final _bodyHeight = _mediaQuery.size.height;
     final _bodyWidth = _mediaQuery.size.width;
+    List<IconPosition> iconPosition = [];
 
+    final _curvePainter = CurvePainter(iconPosition);
+    iconPosition = _curvePainter.generateIconPosition(
+      Size(17*_bodyWidth/20, 0.35*_bodyHeight),
+    );
     return DefaultTabController(
       length: _selectionTabs.length,
       child: Scaffold(
@@ -84,16 +91,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                       color:
                                           Theme.of(context).primaryColorLight,
                                       child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            Container(
-                                              child: Text('placeholder'),
-                                            ),
-                                            Container(
-                                              child: Text('placeholder'),
-                                            ),
-                                          ]),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text('placeholder'),
+                                          ),
+                                          Container(
+                                            child: Text('placeholder'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   )
                                 ],
@@ -104,21 +112,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         Container(
                           child: Container(
                             height: _mediaQuery.size.height * 0.5,
+                            width: _mediaQuery.size.width,
                             // width: double.infinity,
                             //color: Colors.purple,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Stack(
-                                children: [
-                                  CustomPaint(
-                                    painter: CurvePainter(),
-                                    size: Size(_bodyWidth, _bodyHeight),
-                                  ),
-                                  RaisedButton(
-                                      child: Text('Something here'),
-                                      onPressed: null),
-                                ],
-                              ),
+                            child: Stack(
+                              children: [
+                                CustomPaint(
+                                  painter: _curvePainter,
+                                  size: Size(_bodyWidth, _bodyHeight),
+                                 // child: Text('test'),
+                                ),
+                                FlowCurve(40, iconPosition),
+                                // Column(
+                                //   children: [
+                                //     Text(iconPosition[1].x.toString()),
+                                //     Text(iconPosition[1].y.toString()),
+                                //     Text(iconPosition[2].x.toString()),
+                                //     Text(iconPosition[2].y.toString()),
+                                //   ],
+                                // ),
+                              ],
                             ),
                           ),
                         )

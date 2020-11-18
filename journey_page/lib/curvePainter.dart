@@ -1,10 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:journey_page/curvePathInfo.dart';
+import 'package:journey_page/iconPosition.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 class CurvePainter extends CustomPainter {
+  List<IconPosition> iconPosition;
+
+  CurvePainter(this.iconPosition);
+  List<IconPosition> generateIconPosition(Size size) {
+    generateCurveSegment(2 * size.width / 20, 1 * size.height / 20, size.width,
+        size.height, 8, true, 1.5);
+
+    return iconPosition;
+  }
+
   List<CurvePathInfo> generateCurveSegment(
     double startX,
     double startY,
@@ -41,6 +50,11 @@ class CurvePainter extends CustomPainter {
             : currentX - 1 * width / 20;
         referPointY = currentX < 14 * width / 20 ? currentY : nextY;
       }
+      //print(iconPosition.length);
+      iconPosition.add(new IconPosition(
+        currentX,
+        currentY,
+      ));
 
       // store the info in an object
       CurvePathInfo temp = CurvePathInfo(
@@ -51,10 +65,10 @@ class CurvePainter extends CustomPainter {
         direction: direction,
         curveWeight: weight,
       );
-      print(temp.destX.toString());
-      print(temp.destY.toString());
-      print(temp.refX.toString());
-      print(temp.refY.toString());
+      // print(temp.destX.toString());
+      // print(temp.destY.toString());
+      // print(temp.refX.toString());
+      // print(temp.refY.toString());
       //change the coordinate of current point to prepare for the next round
       currentX = nextX;
       currentY = nextY;
@@ -126,6 +140,10 @@ class CurvePainter extends CustomPainter {
       ),
       paint,
     );
+    print(curveSegmentInfo[0].destX.toString());
+    print(curveSegmentInfo[0].destY.toString());
+    print(curveSegmentInfo[1].destX.toString());
+    print(curveSegmentInfo[1].destY.toString());
   }
 
   @override
