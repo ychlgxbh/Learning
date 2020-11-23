@@ -44,6 +44,8 @@ class CurvePainter extends CustomPainter {
 
       // store the info in an object
       CurvePathInfo temp = CurvePathInfo(
+        currentX: currentX,
+        currentY: currentY,
         destX: nextX,
         destY: nextY,
         refX: referPointX,

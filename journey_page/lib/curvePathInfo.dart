@@ -1,4 +1,6 @@
 class CurvePathInfo {
+  final currentX;
+  final currentY;
   final refX;
   final refY;
   final destX;
@@ -7,6 +9,8 @@ class CurvePathInfo {
   final curveWeight;
 
   CurvePathInfo({
+    this.currentX,
+    this.currentY,
     this.refX,
     this.refY,
     this.destX,

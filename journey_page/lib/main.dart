@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:journey_page/CurvePainter.dart';
+import 'package:journey_page/listOfWidgets.dart';
 
 void main() {
   runApp(MyApp());
@@ -114,9 +115,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                     painter: CurvePainter(),
                                     size: Size(_bodyWidth, _bodyHeight),
                                   ),
-                                  RaisedButton(
-                                      child: Text('Something here'),
-                                      onPressed: null),
+                                  ListOfWidgets(
+                                    new CurvePainter().generateCurveSegment(
+                                        0,
+                                        _bodyWidth/20,
+                                        _bodyWidth/1.08,
+                                        _bodyHeight/5.6,
+                                        8,
+                                        true,
+                                        1.5),
+                                  )
                                 ],
                               ),
                             ),
