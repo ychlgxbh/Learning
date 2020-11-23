@@ -15,7 +15,7 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       lowerBound: 0.35,
-      upperBound: 1.0,
+      upperBound: 0.5,
       vsync: this,
     )..repeat(reverse: true);
     _animation = CurvedAnimation(
@@ -36,11 +36,12 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
       scale: _animation,
       alignment: Alignment.center,
       child: RawMaterialButton(
+        constraints: BoxConstraints(minWidth: 20, maxHeight: 20),
         onPressed: null,
         fillColor: Colors.white,
         shape: CircleBorder(),
-        child: FlutterLogo(size: 15.0),
-        padding: EdgeInsets.all(10.0),
+        child: FlutterLogo(size: 10.0),
+        padding: EdgeInsets.all(5.0),
       ),
     );
   }

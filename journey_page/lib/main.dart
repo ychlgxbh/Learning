@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
+  GlobalKey _key = GlobalKey();
+
   final List<Tab> _selectionTabs = <Tab>[
     Tab(
       text: 'Journey Map',
@@ -113,17 +115,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   CustomPaint(
                                     painter: CurvePainter(),
-                                    size: Size(_bodyWidth, _bodyHeight),
+                                    size: Size(
+                                        MediaQuery.of(context).size.width,
+                                        MediaQuery.of(context).size.height),
                                   ),
                                   ListOfWidgets(
-                                    new CurvePainter().generateCurveSegment(
-                                        0,
-                                        _bodyWidth/20,
-                                        _bodyWidth/1.08,
-                                        _bodyHeight/5.6,
-                                        8,
-                                        true,
-                                        1.5),
+                                    new CurvePainter().getDrawingPoints(
+                                      MediaQuery.of(context).size.width/1.3,
+                                      MediaQuery.of(context).size.height/4,
+                                      8,
+                                    ),
                                   )
                                 ],
                               ),

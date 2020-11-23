@@ -2,9 +2,67 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:journey_page/curvePathInfo.dart';
+import 'package:journey_page/drawingPoint.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 class CurvePainter extends CustomPainter {
+  List<DrawingPoint> getDrawingPoints(
+      double width, double height, int numberOfSegments) {
+    var direction = true;
+    var currentX = width / 10.0;
+    var currentY = 0.0;
+    double nextX;
+    double nextY;
+    int counter = 0;
+    List<DrawingPoint> result = [];
+    for (int i = 0; i < numberOfSegments; i++) {
+      // determing the coordinate of the destination
+      nextX = direction ? currentX + 8 * width / 20 : currentX - 8 * width / 20;
+      nextY = currentY + 1.5 * height / 20;
+
+      result.add(new DrawingPoint(currentX, currentY));
+      if (direction) {
+        if (counter == 0) {
+          result.add(new DrawingPoint(
+              currentX + 8 * width / 20 / 3, currentY + 0.9 * height / 20));
+          result.add(new DrawingPoint(currentX + 2 * 8 * width / 20 / 3,
+              currentY + 1.2 * height / 20));
+          counter++;
+        } else {
+          result.add(new DrawingPoint(
+              currentX + 8 * width / 20 / 3, currentY + 0.3 * height / 20));
+          result.add(new DrawingPoint(currentX + 2 * 8 * width / 20 / 3,
+              currentY + 0.6 * height / 20));
+              direction = !direction;
+            
+          counter = 0;
+        }
+      } else {
+        if (counter == 0) {
+          result.add(new DrawingPoint(
+              currentX - 8 * width / 20 / 3, currentY + 0.9 * height / 20));
+          result.add(new DrawingPoint(currentX - 2 * 8 * width / 20 / 3,
+              currentY + 1.2 * height / 20));
+          counter++;
+        } else {
+          result.add(new DrawingPoint(
+              currentX - 8 * width / 20 / 3, currentY + 0.3 * height / 20));
+          result.add(new DrawingPoint(currentX - 2 * 8 * width / 20 / 3,
+              currentY + 0.6 * height / 20));
+              direction = !direction;
+          counter = 0;
+        }
+      }
+      currentX = nextX;
+      currentY = nextY;
+    }
+    for(int i = 0; i < result.length; i++){
+      print('X: ${result[i].currentX.toString()}');
+      print('y: ${result[i].currentY.toString()}');
+    }
+    return result;
+  }
+
   List<CurvePathInfo> generateCurveSegment(
     double startX,
     double startY,
@@ -22,6 +80,9 @@ class CurvePainter extends CustomPainter {
     double referPointX;
     double referPointY;
     int dirCount = 0;
+
+    //  print('width: $width');
+    // print('height: $height');
 
     for (int i = 0; i < numberOfSegments; i++) {
       // determing the coordinate of the destination
@@ -53,10 +114,10 @@ class CurvePainter extends CustomPainter {
         direction: direction,
         curveWeight: weight,
       );
-      print(temp.destX.toString());
-      print(temp.destY.toString());
-      print(temp.refX.toString());
-      print(temp.refY.toString());
+      // print(temp.destX.toString());
+      // print(temp.destY.toString());
+      // print(temp.refX.toString());
+      // print(temp.refY.toString());
       //change the coordinate of current point to prepare for the next round
       currentX = nextX;
       currentY = nextY;
@@ -79,9 +140,11 @@ class CurvePainter extends CustomPainter {
     paint.strokeWidth = 15.0;
     final _width = size.width;
     final _height = size.height;
+    // print('width in paint: $_width');
+    // print('height in paint: $_height');
     final double _conicWeight = 1.5;
     var curveSegmentInfo = generateCurveSegment(2 * _width / 20,
-        1 * _height / 20, _width, _height, 8, true, _conicWeight);
+        1 * _height / 20, _width, _height, 16, true, _conicWeight);
 
     var path = Path();
     var lastPath = Path();
