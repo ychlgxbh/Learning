@@ -47,8 +47,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - asset/Icon/medal.png
-    - asset/Icon/upgrade.png
+    - lib/asset/Icon/medal.png
+    - lib/asset/Icon/medal@2x.png
+    - lib/asset/Icon/upgrade.png
+    - lib/asset/Icon/current_point.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

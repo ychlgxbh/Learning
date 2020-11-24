@@ -32,10 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _incrementCounter() {
-    setState(() {});
-  }
-
   GlobalKey _key = GlobalKey();
 
   final List<Tab> _selectionTabs = <Tab>[
@@ -50,42 +46,52 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _bodyHeight = _mediaQuery.size.height/1.02;
-    final _bodyWidth = _mediaQuery.size.width/1.08;
-    final List<DrawingPoint> _drawingPoint =
-        new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 8);
-    final listOfChildren = _drawingPoint
-        .map(
-          (e) => Positioned(
-            left: e.currentX,
-            top: e.currentY,
-            child: IconWidget(e.index),
-          ),
-        )
-        .toList();
-    listOfChildren.insert(
-      0,
-      new Positioned(
-        child: CustomPaint(
-          painter: CurvePainter(),
-          size: Size(MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height),
-        ),
-      ),
-    );
+    final _bodyHeight = _mediaQuery.size.height ;
+    final _bodyWidth = (_mediaQuery.size.width-20) ;
+
     return DefaultTabController(
       length: _selectionTabs.length,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.brown,
-          title: Text(
-            widget.title,
-            style: TextStyle(color: Colors.black),
+          backgroundColor: Colors.white,
+          title: Container(
+            alignment: Alignment.center,
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
           ),
-          bottom: TabBar(tabs: _selectionTabs),
+          bottom: TabBar(
+            tabs: _selectionTabs,
+            labelColor: Colors.black,
+            
+          ),
         ),
         body: TabBarView(
           children: _selectionTabs.map((Tab tab) {
+            final List<DrawingPoint> _drawingPoint = new CurvePainter()
+                .getDrawingPoints(_bodyWidth, _bodyHeight, 16);
+            final listOfChildren = _drawingPoint
+                .map(
+                  (e) => Positioned(
+                    left: e.currentX,
+                    top: e.currentY,
+                    child: IconWidget(e.index),
+                  ),
+                )
+                .toList();
+            listOfChildren.insert(
+              0,
+              new Positioned(
+                child: CustomPaint(
+                  painter: CurvePainter(),
+                  size: Size(MediaQuery.of(context).size.width,
+                      MediaQuery.of(context).size.height),
+                ),
+              ),
+            );
             return tab.text == 'Activity'
                 ? Container(
                     child: Text('Nothing yet'),
@@ -96,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       children: [
                         Container(
-                          height: _mediaQuery.size.height * 0.2,
+                          height: _mediaQuery.size.height * 0.15,
                           width: double.infinity,
                           child: Container(
                             child: Card(
@@ -128,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Container(
                           child: Container(
-                            height: _mediaQuery.size.height * 0.5,
+                            height: _mediaQuery.size.height * 0.55,
                             // width: double.infinity,
                             //color: Colors.purple,
                             child: SingleChildScrollView(
