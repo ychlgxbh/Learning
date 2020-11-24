@@ -36,12 +36,12 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
       scale: _animation,
       alignment: Alignment.center,
       child: RawMaterialButton(
-        constraints: BoxConstraints(minWidth: 20, maxHeight: 20),
+        constraints: BoxConstraints(minWidth: 40, minHeight: 20),
         onPressed: null,
-        fillColor: Colors.white,
+        fillColor: Colors.red,
         shape: CircleBorder(),
-        child: FlutterLogo(size: 10.0),
-        padding: EdgeInsets.all(5.0),
+        child: FlutterLogo(size: 20.0),
+        padding: EdgeInsets.all(10.0),
       ),
     );
   }

@@ -6,20 +6,23 @@ import 'curvePathInfo.dart';
 
 class ListOfWidgets extends StatelessWidget {
   final List<DrawingPoint> drawingPoint;
-  ListOfWidgets(this.drawingPoint);
+  final double height;
+  ListOfWidgets(this.drawingPoint, this.height);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      height: height *5,
+      child: Stack(
         children: drawingPoint
             .map(
-              (e) => Transform(
-                transform: Matrix4.translationValues(e.currentX, e.currentY/20, 0),
+              (e) => Positioned(
+                left: e.currentX,
+                top: e.currentY,
                 child: IconWidget(),
               ),
             )
-            .toList(),  
+            .toList(),
       ),
     );
   }

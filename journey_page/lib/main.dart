@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journey_page/CurvePainter.dart';
+import 'package:journey_page/drawingPoint.dart';
+import 'package:journey_page/iconWidget.dart';
 import 'package:journey_page/listOfWidgets.dart';
 
 void main() {
@@ -48,9 +50,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _bodyHeight = _mediaQuery.size.height;
-    final _bodyWidth = _mediaQuery.size.width;
-
+    final _bodyHeight = _mediaQuery.size.height/1.02;
+    final _bodyWidth = _mediaQuery.size.width/1.08;
+    final List<DrawingPoint> _drawingPoint =
+        new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 8);
+    final listOfChildren = _drawingPoint
+        .map(
+          (e) => Positioned(
+            left: e.currentX,
+            top: e.currentY,
+            child: IconWidget(),
+          ),
+        )
+        .toList();
+    listOfChildren.insert(
+      0,
+      new Positioned(
+        child: CustomPaint(
+          painter: CurvePainter(),
+          size: Size(MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height),
+        ),
+      ),
+    );
     return DefaultTabController(
       length: _selectionTabs.length,
       child: Scaffold(
@@ -112,21 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Stack(
-                                children: [
-                                  CustomPaint(
-                                    painter: CurvePainter(),
-                                    size: Size(
-                                        MediaQuery.of(context).size.width,
-                                        MediaQuery.of(context).size.height),
-                                  ),
-                                  ListOfWidgets(
-                                    new CurvePainter().getDrawingPoints(
-                                      MediaQuery.of(context).size.width/1.3,
-                                      MediaQuery.of(context).size.height/4,
-                                      8,
-                                    ),
-                                  )
-                                ],
+                                children: listOfChildren,
                               ),
                             ),
                           ),
