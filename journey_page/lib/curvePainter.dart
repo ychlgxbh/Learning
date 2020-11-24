@@ -11,13 +11,13 @@ class CurvePainter extends CustomPainter {
     var direction = true;
 
     var currentX = width / 34;
-    var currentY = height / 60;
+    var currentY = height / 58;
     double nextX;
     double nextY;
     int counter = 0;
     List<DrawingPoint> result = [];
-    print('width in get method: $width');
-    print('height in get method: $height');
+    //print('width in get method: $width');
+    //print('height in get method: $height');
 
     for (int i = 0; i < numberOfSegments; i++) {
       // determing the coordinate of the destination
@@ -28,7 +28,7 @@ class CurvePainter extends CustomPainter {
       if (direction) {
         if (counter == 0) {
           //points on the first curve segment
-          result.add(new DrawingPoint(currentX + 8 * width / 20 / 3.5,
+          result.add(new DrawingPoint(currentX + 8 * width / 20 / 3,
               currentY + 10 / 12 * 1.5 * height / 20, result.length));
           result.add(new DrawingPoint(currentX + 2 * 8 * width / 20 / 3,
               currentY + 12 / 12 * 1.5 * height / 20, result.length));
@@ -64,10 +64,10 @@ class CurvePainter extends CustomPainter {
       currentX = nextX;
       currentY = nextY;
     }
-    // for(int i = 0; i < result.length; i++){
-    //   print('X: ${result[i].currentX.toString()}');
-    //   print('y: ${result[i].currentY.toString()}');
-    // }
+    for(int i = 0; i < result.length; i++){
+      print('X: ${result[i].currentX.toString()}');
+      print('y: ${result[i].currentY.toString()}');
+    }
     return result;
   }
 
@@ -148,11 +148,11 @@ class CurvePainter extends CustomPainter {
     paint.strokeWidth = 15.0;
     final _width = size.width;
     final _height = size.height;
-    print('width in paint: $_width');
-    print('height in paint: $_height');
+    // print('width in paint: $_width');
+    // print('height in paint: $_height');
     final double _conicWeight = 1.5;
-    var curveSegmentInfo = generateCurveSegment(2 * _width / 20,
-        1 * _height / 20, _width, _height, 108, true, _conicWeight);
+    var curveSegmentInfo = generateCurveSegment(1.75 * _width / 20,
+        1 * _height / 20.7, _width, _height, 108, true, _conicWeight);
 
     var path = Path();
     var lastPath = Path();
