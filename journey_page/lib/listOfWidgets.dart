@@ -19,7 +19,7 @@ class ListOfWidgets extends StatelessWidget {
               (e) => Positioned(
                 left: e.currentX,
                 top: e.currentY,
-                child: IconWidget(),
+                child: IconWidget(e.index%3 == 0 ? 40 : 15),
               ),
             )
             .toList(),

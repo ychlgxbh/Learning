@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class IconWidget extends StatefulWidget {
+  final int _index;
+  IconWidget(this._index);
   @override
   _IconWidgetState createState() => _IconWidgetState();
 }
@@ -36,11 +38,15 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
       scale: _animation,
       alignment: Alignment.center,
       child: RawMaterialButton(
-        constraints: BoxConstraints(minWidth: 40, minHeight: 20),
+        constraints: BoxConstraints(minWidth: 10, minHeight: 10),
         onPressed: null,
         fillColor: Colors.red,
         shape: CircleBorder(),
-        child: FlutterLogo(size: 20.0),
+        child: Image.asset('asset/Icon/medal.png',
+          width: (widget._index) % 3 == 0 ? 35 : 15,
+          height: (widget._index) % 3 == 0 ? 35 : 15,
+          
+        ),
         padding: EdgeInsets.all(10.0),
       ),
     );

@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           (e) => Positioned(
             left: e.currentX,
             top: e.currentY,
-            child: IconWidget(),
+            child: IconWidget(e.index),
           ),
         )
         .toList();
