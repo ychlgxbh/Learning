@@ -10,8 +10,8 @@ class CurvePainter extends CustomPainter {
       double width, double height, int numberOfSegments) {
     var direction = true;
 
-    var currentX = width / 34;
-    var currentY = height / 58;
+    var currentX = width / 30;
+    var currentY = height / 80;
     double nextX;
     double nextY;
     int counter = 0;
@@ -22,23 +22,23 @@ class CurvePainter extends CustomPainter {
     for (int i = 0; i < numberOfSegments; i++) {
       // determing the coordinate of the destination
       nextX = direction ? currentX + 8 * width / 20 : currentX - 8 * width / 20;
-      nextY = currentY + 1.49 * height / 20;
+      nextY = currentY + 1.5 * height / 20;
 
       result.add(new DrawingPoint(currentX, currentY, result.length));
       if (direction) {
         if (counter == 0) {
           //points on the first curve segment
           result.add(new DrawingPoint(currentX + 8 * width / 20 / 3,
-              currentY + 10 / 12 * 1.5 * height / 20, result.length));
+              currentY + 11 / 12 * 1.5 * height / 20, result.length));
           result.add(new DrawingPoint(currentX + 2 * 8 * width / 20 / 3,
-              currentY + 12 / 12 * 1.5 * height / 20, result.length));
+              currentY + 12.5 / 12 * 1.5 * height / 20, result.length));
           counter++;
         } else {
           //points on the second curve segment
           result.add(new DrawingPoint(currentX + 8 * width / 20 / 3,
-              currentY + 2 / 36 * 1.5 * height / 20, result.length));
+              currentY + 3 / 36 * 1.5 * height / 20, result.length));
           result.add(new DrawingPoint(currentX + 2 * 8 * width / 20 / 3,
-              currentY + 4 / 24 * 1.5 * height / 20, result.length));
+              currentY + 5 / 24 * 1.5 * height / 20, result.length));
           direction = !direction;
 
           counter = 0;
@@ -47,7 +47,7 @@ class CurvePainter extends CustomPainter {
         //points on the third curve segment
         if (counter == 0) {
           result.add(new DrawingPoint(currentX - 8 * width / 20 / 3,
-              currentY + 10 / 12 * 1.5 * height / 20, result.length));
+              currentY + 9.5 / 12 * 1.5 * height / 20, result.length));
           result.add(new DrawingPoint(currentX - 2 * 8 * width / 20 / 3,
               currentY + 11.8 / 12 * 1.5 * height / 20, result.length));
           counter++;
@@ -151,8 +151,8 @@ class CurvePainter extends CustomPainter {
     // print('width in paint: $_width');
     // print('height in paint: $_height');
     final double _conicWeight = 1.5;
-    var curveSegmentInfo = generateCurveSegment(1.75 * _width / 20,
-        1 * _height / 20.7, _width, _height, 108, true, _conicWeight);
+    var curveSegmentInfo = generateCurveSegment(1.8 * _width / 20,
+        0.95 * _height / 20.7, _width, _height, 12, true, _conicWeight);
 
     var path = Path();
     var lastPath = Path();

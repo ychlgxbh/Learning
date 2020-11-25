@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _bodyHeight = _mediaQuery.size.height ;
-    final _bodyWidth = (_mediaQuery.size.width-20) ;
+    final _bodyWidth = (_mediaQuery.size.width-22) ;
 
     return DefaultTabController(
       length: _selectionTabs.length,
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: TabBarView(
           children: _selectionTabs.map((Tab tab) {
             final List<DrawingPoint> _drawingPoint = new CurvePainter()
-                .getDrawingPoints(_bodyWidth, _bodyHeight, 16);
+                .getDrawingPoints(_bodyWidth, _bodyHeight, 11);
             final listOfChildren = _drawingPoint
                 .map(
                   (e) => Positioned(
