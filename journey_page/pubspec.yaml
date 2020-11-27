@@ -52,6 +52,12 @@ flutter:
     - lib/asset/Icon/medal@2x.png
     - lib/asset/Icon/upgrade.png
     - lib/asset/Icon/current_point.png
+    - lib/asset/Icon/rewards.png
+    - lib/asset/Icon/challenges.png
+    - lib/asset/Icon/exercise@2x.png
+    - lib/asset/Icon/exercise.png
+    - lib/asset/Icon/profile.png
+    - lib/asset/Icon/lock.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               child: Container(
-                height: _mediaQuery.size.height * 0.55,
+                height: _mediaQuery.size.height * 0.495,
                 // width: double.infinity,
                 //color: Colors.purple,
                 child: BlockListView(_bodyWidth, _bodyHeight, 2),
@@ -169,6 +169,51 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+        height: _mediaQuery.size.height * 0.08,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('lib/asset/Icon/medal.png'),
+                Text('journey'),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('lib/asset/Icon/rewards.png'),
+                Text('rewards'),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('lib/asset/Icon/exercise.png'),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('lib/asset/Icon/challenges.png'),
+                Text('challenges'),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                Image.asset('lib/asset/Icon/profile.png'),
+                Text('profile'),
+              ],
+            ),
+        ],
+      ),
+          ),),
     );
   }
 }
