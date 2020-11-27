@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Container(
-              height: _mediaQuery.size.height * 0.2,
+              height: _mediaQuery.size.height * 0.23,
               width: double.infinity,
               child: Column(
                 children: [
@@ -84,40 +84,37 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: _mediaQuery.size.height * 0.05,
                     alignment: Alignment.center,
                     color: Theme.of(context).primaryColor,
-                    child: Expanded(
-                      child: Card(
-                        color: Theme.of(context).primaryColor,
-                        child: Text('placeholder'),
-                      ),
+                    child: Card(
+                      color: Theme.of(context).primaryColor,
+                      child: Text('placeholder'),
                     ),
                   ),
                   Container(
-                    child: Expanded(
-                      child: Card(
-                        color: Theme.of(context).primaryColorDark,
-                        child: Column(
-                          children: [
-                            Text('placeholder'),
-                            Container(
-                              height: _mediaQuery.size.height * 0.1,
-                              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
-                              child: Card(
-                                color: Theme.of(context).primaryColorLight,
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Container(
-                                        child: Text('placeholder'),
-                                      ),
-                                      Container(
-                                        child: Text('placeholder'),
-                                      ),
-                                    ]),
-                              ),
-                            )
-                          ],
-                        ),
+                    height: _mediaQuery.size.height * 0.17,
+                    child: Card(
+                      color: Theme.of(context).primaryColorDark,
+                      child: Column(
+                        children: [
+                          Text('placeholder'),
+                          Container(
+                            height: _mediaQuery.size.height * 0.13,
+                            padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            child: Card(
+                              color: Theme.of(context).primaryColorLight,
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text('placeholder'),
+                                    ),
+                                    Container(
+                                      child: Text('placeholder'),
+                                    ),
+                                  ]),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -126,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               child: Container(
-                height: _mediaQuery.size.height * 0.495,
+                height: _mediaQuery.size.height * 0.45,
                 // width: double.infinity,
                 //color: Colors.purple,
                 child: BlockListView(_bodyWidth, _bodyHeight, 2),
@@ -136,7 +133,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       Container(
-        child: Text('Nothing yet'),
+        child: Center(
+          child: Text(
+            'Under construction',
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
     ];
     return Scaffold(
@@ -154,66 +159,64 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottom: PreferredSize(
           preferredSize: Size(_bodyWidth, 0.05 * _bodyHeight),
-          child: Expanded(
-            child: CupertinoSegmentedControl<int>(
-              padding: EdgeInsets.all(8),
-              children: _label,
-              onValueChanged: (int val) {
-                setState(() {
-                  _sharedValue = val;
-                  print('$_sharedValue');
-                });
-              },
-              groupValue: _sharedValue,
-            ),
+          child: CupertinoSegmentedControl<int>(
+            padding: EdgeInsets.all(8),
+            children: _label,
+            onValueChanged: (int val) {
+              setState(() {
+                _sharedValue = val;
+                print('$_sharedValue');
+              });
+            },
+            groupValue: _sharedValue,
           ),
         ),
       ),
       bottomNavigationBar: Container(
         height: _mediaQuery.size.height * 0.08,
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('lib/asset/Icon/medal.png'),
-                Text('journey'),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('lib/asset/Icon/rewards.png'),
-                Text('rewards'),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('lib/asset/Icon/exercise.png'),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('lib/asset/Icon/challenges.png'),
-                Text('challenges'),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                
-                Image.asset('lib/asset/Icon/profile.png'),
-                Text('profile'),
-              ],
-            ),
-        ],
+        child: Container(
+          padding: EdgeInsets.fromLTRB(20, 0, 4, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('lib/asset/Icon/medal.png'),
+                  Text('journey'),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('lib/asset/Icon/rewards.png'),
+                  Text('rewards'),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('lib/asset/Icon/exercise.png'),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('lib/asset/Icon/challenges.png'),
+                  Text('challenges'),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('lib/asset/Icon/profile.png'),
+                  Text('profile'),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
-          ),),
     );
   }
 }

@@ -17,8 +17,8 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
-      lowerBound: 0.3,
-      upperBound: 0.4,
+      lowerBound: 0.8,
+      upperBound: 1.0,
       vsync: this,
     )..repeat(reverse: true);
     _animation = CurvedAnimation(
@@ -38,26 +38,40 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
     String _imageName = (widget._index + 1) % 4 == 0
         ? ((widget._index + 1) % 16 == 0
             ? 'lib/asset/Icon/upgrade.png'
-            : 'lib/asset/Icon/upgrade.png')
-        : 'lib/asset/Icon/current_point.png';
+            : 'lib/asset/Icon/medal.png')
+        : 'lib/asset/Icon/lock.png';
     if (widget._index == 0) {
       _imageName = 'lib/asset/Icon/current_point.png';
-    }
-    return ScaleTransition(
-      scale: _animation,
-      alignment: Alignment.center,
-      child: RawMaterialButton(
+      return ScaleTransition(
+        scale: _animation,
+        alignment: Alignment.center,
+        child: RawMaterialButton(
+          constraints: BoxConstraints(minWidth: 10, minHeight: 10),
+          onPressed: null,
+          fillColor: Colors.white,
+          shape: CircleBorder(),
+          child: Image.asset(
+            _imageName,
+            width: (widget._index + 1) % 4 == 0 && widget._index != 0 ? 40 : 30,
+            height:
+                (widget._index + 1) % 4 == 0 && widget._index != 0 ? 40 : 30,
+          ),
+          padding: EdgeInsets.all(10.0),
+        ),
+      );
+    } else {
+      return RawMaterialButton(
         constraints: BoxConstraints(minWidth: 10, minHeight: 10),
         onPressed: null,
         fillColor: Colors.white,
         shape: CircleBorder(),
         child: Image.asset(
           _imageName,
-          width: (widget._index + 1) % 4 == 0 && widget._index != 0 ? 40 : 20,
-          height: (widget._index + 1) % 4 == 0 && widget._index != 0 ? 40 : 20,
+          width: (widget._index + 1) % 4 == 0 && widget._index != 0 ? 20 : 10,
+          height: (widget._index + 1) % 4 == 0 && widget._index != 0 ? 20 : 10,
         ),
         padding: EdgeInsets.all(10.0),
-      ),
-    );
+      );
+    }
   }
 }

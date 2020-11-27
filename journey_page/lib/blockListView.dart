@@ -18,7 +18,7 @@ class _BlockListViewState extends State<BlockListView> {
   int _pageCount = 0;
 
   final List<UserData> userDataPart1 = [new UserData(6)];
-  final List<UserData> userDataPart2 = [new UserData(12)];
+  final List<UserData> userDataPart2 = [new UserData(12), new UserData(10)];
   final _pagingController = PagingController<int, UserData>(
     firstPageKey: 0,
   );
@@ -46,8 +46,9 @@ class _BlockListViewState extends State<BlockListView> {
         _pagingController.appendLastPage(newItems);
       } else {
         print('${_pageCount + 1}th page fetched');
-        final nextPageKey = pageKey + newItems.length;
+        final nextPageKey = pageKey + 1;
         _pagingController.appendPage(newItems, nextPageKey);
+
         _pageCount++;
       }
     } catch (error) {
@@ -59,17 +60,15 @@ class _BlockListViewState extends State<BlockListView> {
   @override
   Widget build(BuildContext context) {
     print('build');
-    return RefreshIndicator(
-      onRefresh: () => Future.sync(
-        // 2
-        () => _pagingController.refresh(),
+    return PagedListView.separated(
+      pagingController: _pagingController,
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 16,
+        child: Text('seperator'),
       ),
-      child: PagedListView(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<UserData>(
-          itemBuilder: (context, item, index) => new JourneyBlock(
-              widget._bodyWidth, widget._bodyHeight, item.numberOfSegment),
-        ),
+      builderDelegate: PagedChildBuilderDelegate<UserData>(
+        itemBuilder: (context, item, index) => new JourneyBlock(
+            widget._bodyWidth, widget._bodyHeight, item.numberOfSegment),
       ),
     );
   }
