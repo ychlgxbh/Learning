@@ -64,10 +64,10 @@ class CurvePainter extends CustomPainter {
       currentX = nextX;
       currentY = nextY;
     }
-    for(int i = 0; i < result.length; i++){
-      print('X: ${result[i].currentX.toString()}');
-      print('y: ${result[i].currentY.toString()}');
-    }
+    // for(int i = 0; i < result.length; i++){
+    //   print('X: ${result[i].currentX.toString()}');
+    //   print('y: ${result[i].currentY.toString()}');
+    // }
     return result;
   }
 

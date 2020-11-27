@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:journey_page/CurvePainter.dart';
 import 'package:journey_page/drawingPoint.dart';
 import 'package:journey_page/iconWidget.dart';
-import 'package:journey_page/listOfWidgets.dart';
+import 'package:journey_page/journeyBlock.dart';
+import 'package:journey_page/blockListView.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,123 +34,139 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GlobalKey _key = GlobalKey();
-
-  final List<Tab> _selectionTabs = <Tab>[
-    Tab(
-      text: 'Journey Map',
-    ),
-    Tab(
-      text: 'Activity',
-    )
-  ];
+  int _sharedValue = 0;
+  final Map<int, Widget> _label = <int, Widget>{
+    0: Text('       Journey Map       '),
+    1: Text('       Activity       '),
+  };
 
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _bodyHeight = _mediaQuery.size.height ;
-    final _bodyWidth = (_mediaQuery.size.width-22) ;
+    final _bodyHeight = _mediaQuery.size.height;
+    final _bodyWidth = (_mediaQuery.size.width - 22);
 
-    return DefaultTabController(
-      length: _selectionTabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Container(
-            alignment: Alignment.center,
-            child: Text(
-              widget.title,
-              style: TextStyle(
-                color: Colors.black,
+    final List<DrawingPoint> _drawingPoint =
+        new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 11);
+
+    final listOfChildren = _drawingPoint
+        .map(
+          (e) => Positioned(
+            left: e.currentX,
+            top: e.currentY,
+            child: IconWidget(e.index),
+          ),
+        )
+        .toList();
+    listOfChildren.insert(
+      0,
+      new Positioned(
+        child: CustomPaint(
+          painter: CurvePainter(),
+          size: Size(MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height),
+        ),
+      ),
+    );
+    List<Widget> _segments = [
+      Container(
+        padding: EdgeInsets.all(8),
+        color: Theme.of(context).primaryColor,
+        child: Column(
+          children: [
+            Container(
+              height: _mediaQuery.size.height * 0.2,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Container(
+                    width: _mediaQuery.size.width,
+                    height: _mediaQuery.size.height * 0.05,
+                    alignment: Alignment.center,
+                    color: Theme.of(context).primaryColor,
+                    child: Expanded(
+                      child: Card(
+                        color: Theme.of(context).primaryColor,
+                        child: Text('placeholder'),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Expanded(
+                      child: Card(
+                        color: Theme.of(context).primaryColorDark,
+                        child: Column(
+                          children: [
+                            Text('placeholder'),
+                            Container(
+                              height: _mediaQuery.size.height * 0.1,
+                              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                              child: Card(
+                                color: Theme.of(context).primaryColorLight,
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text('placeholder'),
+                                      ),
+                                      Container(
+                                        child: Text('placeholder'),
+                                      ),
+                                    ]),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          bottom: TabBar(
-            tabs: _selectionTabs,
-            labelColor: Colors.black,
-            
+            Container(
+              child: Container(
+                height: _mediaQuery.size.height * 0.55,
+                // width: double.infinity,
+                //color: Colors.purple,
+                child: BlockListView(_bodyWidth, _bodyHeight, 2),
+              ),
+            )
+          ],
+        ),
+      ),
+      Container(
+        child: Text('Nothing yet'),
+      ),
+    ];
+    return Scaffold(
+      body: _segments[_sharedValue],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Container(
+          alignment: Alignment.center,
+          child: Text(
+            widget.title,
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
         ),
-        body: TabBarView(
-          children: _selectionTabs.map((Tab tab) {
-            final List<DrawingPoint> _drawingPoint = new CurvePainter()
-                .getDrawingPoints(_bodyWidth, _bodyHeight, 11);
-            final listOfChildren = _drawingPoint
-                .map(
-                  (e) => Positioned(
-                    left: e.currentX,
-                    top: e.currentY,
-                    child: IconWidget(e.index),
-                  ),
-                )
-                .toList();
-            listOfChildren.insert(
-              0,
-              new Positioned(
-                child: CustomPaint(
-                  painter: CurvePainter(),
-                  size: Size(MediaQuery.of(context).size.width,
-                      MediaQuery.of(context).size.height),
-                ),
-              ),
-            );
-            return tab.text == 'Activity'
-                ? Container(
-                    child: Text('Nothing yet'),
-                  )
-                : Container(
-                    padding: EdgeInsets.all(10),
-                    color: Theme.of(context).primaryColor,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: _mediaQuery.size.height * 0.15,
-                          width: double.infinity,
-                          child: Container(
-                            child: Card(
-                              color: Theme.of(context).primaryColorDark,
-                              child: Column(
-                                children: [
-                                  Text('Today\s goal'),
-                                  Expanded(
-                                    child: Card(
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            Container(
-                                              child: Text('placeholder'),
-                                            ),
-                                            Container(
-                                              child: Text('placeholder'),
-                                            ),
-                                          ]),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                            height: _mediaQuery.size.height * 0.55,
-                            // width: double.infinity,
-                            //color: Colors.purple,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Stack(
-                                children: listOfChildren,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-          }).toList(),
+        bottom: PreferredSize(
+          preferredSize: Size(_bodyWidth, 0.05 * _bodyHeight),
+          child: Expanded(
+            child: CupertinoSegmentedControl<int>(
+              padding: EdgeInsets.all(8),
+              children: _label,
+              onValueChanged: (int val) {
+                setState(() {
+                  _sharedValue = val;
+                  print('$_sharedValue');
+                });
+              },
+              groupValue: _sharedValue,
+            ),
+          ),
         ),
       ),
     );

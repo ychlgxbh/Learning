@@ -29,8 +29,8 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -38,7 +38,7 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
     String _imageName = (widget._index + 1) % 4 == 0
         ? ((widget._index + 1) % 16 == 0
             ? 'lib/asset/Icon/upgrade.png'
-            : 'lib/asset/Icon/medal@2x.png')
+            : 'lib/asset/Icon/upgrade.png')
         : 'lib/asset/Icon/current_point.png';
     if (widget._index == 0) {
       _imageName = 'lib/asset/Icon/current_point.png';
