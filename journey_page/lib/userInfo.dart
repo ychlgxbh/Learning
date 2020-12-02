@@ -108,7 +108,7 @@ class Reward {
     };
 }
 
-enum Status { TICK, CURRENT_LOCK, LOCK }
+enum Status { TICK, CURRENT_LOCK, LOCK, FAIL }
 
 final statusValues = EnumValues({
     "current_lock": Status.CURRENT_LOCK,

@@ -8,6 +8,7 @@ import 'package:journey_page/drawingPoint.dart';
 import 'package:journey_page/iconWidget.dart';
 import 'package:journey_page/journeyBlock.dart';
 import 'package:journey_page/blockListView.dart';
+import 'package:journey_page/userInfo.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,21 +46,21 @@ class _MyHomePageState extends State<MyHomePage> {
   };
   @override
   void initState() {
-    Future response;
-    response = loadAsset();
-    response.then((value) {
-      print(value.length);
-      print(value);
-      print(jsonDecode(value));
+    // Future response;
+    // response = loadAsset();
+    // response.then((value) {
+    //   print(value.length);
+    //   print(value);
+    //   print(userInfoFromJson(value).dots.length);
 
-    });
+    // });
     super.initState();
   }
 
-  Future<String> loadAsset() async {
-    return rootBundle.loadString('lib/asset/jsons/journeyMap.json',
-        cache: false);
-  }
+  // Future<String> loadAsset() async {
+  //   return rootBundle.loadString('lib/asset/jsons/journeyMap.json',
+  //       cache: false);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: _mediaQuery.size.height * 0.45,
                 // width: double.infinity,
                 //color: Colors.purple,
-                child: BlockListView(_bodyWidth, _bodyHeight, 100),
+                child: BlockListView(_bodyWidth, _bodyHeight, 1),
               ),
             )
           ],

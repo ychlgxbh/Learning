@@ -9,18 +9,21 @@ import 'package:journey_page/iconWidget.dart';
 class JourneyBlock extends StatelessWidget {
   final double _bodyWidth;
   final double _bodyHeight;
- //final int _numberOfSegment;
- 
+  //final int _numberOfSegment;
+
   final List<Dot> dotList;
-  
 
   JourneyBlock(this._bodyWidth, this._bodyHeight, this.dotList);
 
   @override
   Widget build(BuildContext context) {
-    for(int i = 0; i < dotList.length; i++){
-      print(dotList[i]);
-    }
+    // if(dotList == null){
+    //   print('is null');
+    // }
+    print(dotList.length.toString());
+    // for (int i = 0; i < dotList.length; i++) {
+    //   print(dotList[i]);
+    // }
     // final List<DrawingPoint> _drawingPoint = new CurvePainter()
     //     .getDrawingPoints(_bodyWidth, _bodyHeight, _numberOfSegment);
     // List<Widget> _textBetween = [];
@@ -94,6 +97,11 @@ class JourneyBlock extends StatelessWidget {
     //   fit: StackFit.loose,
     //   children: listOfChildren,
     // );
-    return Container();
+    return Container(
+        child: CustomPaint(
+      painter: CurvePainter(dotList),
+      size: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
+    ));
   }
 }
