@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:journey_page/CurvePainter.dart';
 import 'package:journey_page/drawingPoint.dart';
 import 'package:journey_page/iconWidget.dart';
@@ -35,10 +38,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _sharedValue = 0;
+
   final Map<int, Widget> _label = <int, Widget>{
     0: Text('       Journey Map       '),
     1: Text('       Activity       '),
   };
+  @override
+  void initState() {
+    Future response;
+    response = loadAsset();
+    response.then((value) {
+      print(value.length);
+      print(value);
+      print(jsonDecode(value));
+
+    });
+    super.initState();
+  }
+
+  Future<String> loadAsset() async {
+    return rootBundle.loadString('lib/asset/jsons/journeyMap.json',
+        cache: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,28 +67,28 @@ class _MyHomePageState extends State<MyHomePage> {
     final _bodyHeight = _mediaQuery.size.height;
     final _bodyWidth = (_mediaQuery.size.width - 22);
 
-    final List<DrawingPoint> _drawingPoint =
-        new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 11);
+    // final List<DrawingPoint> _drawingPoint =
+    //     new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 11);
 
-    final listOfChildren = _drawingPoint
-        .map(
-          (e) => Positioned(
-            left: e.currentX,
-            top: e.currentY,
-            child: IconWidget(e.index),
-          ),
-        )
-        .toList();
-    listOfChildren.insert(
-      0,
-      new Positioned(
-        child: CustomPaint(
-          painter: CurvePainter(),
-          size: Size(MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height),
-        ),
-      ),
-    );
+    // final listOfChildren = _drawingPoint
+    //     .map(
+    //       (e) => Positioned(
+    //         left: e.currentX,
+    //         top: e.currentY,
+    //         child: IconWidget(e.index),
+    //       ),
+    //     )
+    //     .toList();
+    // listOfChildren.insert(
+    //   0,
+    //   new Positioned(
+    //     child: CustomPaint(
+    //       painter: CurvePainter(),
+    //       size: Size(MediaQuery.of(context).size.width,
+    //           MediaQuery.of(context).size.height),
+    //     ),
+    //   ),
+    // );
     List<Widget> _segments = [
       Container(
         padding: EdgeInsets.all(8),
@@ -126,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: _mediaQuery.size.height * 0.45,
                 // width: double.infinity,
                 //color: Colors.purple,
-                child: BlockListView(_bodyWidth, _bodyHeight, 2),
+                child: BlockListView(_bodyWidth, _bodyHeight, 100),
               ),
             )
           ],

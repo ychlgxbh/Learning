@@ -58,6 +58,7 @@ flutter:
     - lib/asset/Icon/exercise.png
     - lib/asset/Icon/profile.png
     - lib/asset/Icon/lock.png
+    - lib/asset/jsons/journeyMap.json
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -2,16 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:journey_page/curvePathInfo.dart';
+import 'package:journey_page/userInfo.dart';
 import 'package:journey_page/drawingPoint.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 class CurvePainter extends CustomPainter {
+  final List<Dot> dotList;
+  CurvePainter(this.dotList);
+
   List<DrawingPoint> getDrawingPoints(
       double width, double height, int numberOfSegments) {
     var direction = true;
 
     var currentX = width / 30;
-    var currentY = height / 80;
+    var currentY = 0.0;
     double nextX;
     double nextY;
     int counter = 0;
@@ -76,8 +80,6 @@ class CurvePainter extends CustomPainter {
     double startY,
     double width,
     double height,
-    double numberOfSegments,
-    bool direction,
     double weight,
   ) {
     List<CurvePathInfo> result = [];
@@ -92,52 +94,53 @@ class CurvePainter extends CustomPainter {
     //  print('width: $width');
     // print('height: $height');
 
-    for (int i = 0; i < numberOfSegments; i++) {
-      // determing the coordinate of the destination
-      nextX = direction ? currentX + 8 * width / 20 : currentX - 8 * width / 20;
-      nextY = currentY + 1.5 * height / 20;
+    // for (int i = 0; i < numberOfSegments; i++) {
+    //   // determing the coordinate of the destination
+    //   nextX = direction ? currentX + 8 * width / 20 : currentX - 8 * width / 20;
+    //   nextY = currentY + 2 * height / 24 ;
 
-      //determing the coordinate of the reference point
-      if (direction) {
-        referPointX = currentX < 6 * width / 20
-            ? currentX + 1 * width / 20
-            : nextX - 1 * width / 20;
+    //   //determing the coordinate of the reference point
+    //   if (direction) {
+    //     referPointX = currentX < 6 * width / 20
+    //         ? currentX + 1 * width / 20
+    //         : nextX - 1 * width / 20;
 
-        referPointY = currentX < 6 * width / 20 ? nextY : currentY;
-      } else {
-        referPointX = currentX < 14 * width / 20
-            ? nextX + 1 * width / 20
-            : currentX - 1 * width / 20;
-        referPointY = currentX < 14 * width / 20 ? currentY : nextY;
-      }
+    //     referPointY = currentX < 6 * width / 20 ? nextY : currentY;
+    //   } else {
+    //     referPointX = currentX < 14 * width / 20
+    //         ? nextX + 1 * width / 20
+    //         : currentX - 1 * width / 20;
+    //     referPointY = currentX < 14 * width / 20 ? currentY : nextY;
+    //   }
 
-      // store the info in an object
-      CurvePathInfo temp = CurvePathInfo(
-        currentX: currentX,
-        currentY: currentY,
-        destX: nextX,
-        destY: nextY,
-        refX: referPointX,
-        refY: referPointY,
-        direction: direction,
-        curveWeight: weight,
-      );
-      // print(temp.destX.toString());
-      // print(temp.destY.toString());
-      // print(temp.refX.toString());
-      // print(temp.refY.toString());
-      //change the coordinate of current point to prepare for the next round
-      currentX = nextX;
-      currentY = nextY;
-      result.add(temp);
-      dirCount++;
-      if (dirCount == 2) {
-        direction = !direction;
-        dirCount = 0;
-      }
-    }
+    // store the info in an object
+    //     CurvePathInfo temp = CurvePathInfo(
+    //       currentX: currentX,
+    //       currentY: currentY,
+    //       destX: nextX,
+    //       destY: nextY,
+    //       refX: referPointX,
+    //       refY: referPointY,
+    //       direction: direction,
+    //       curveWeight: weight,
+    //     );
+    //     // print(temp.destX.toString());
+    //     // print(temp.destY.toString());
+    //     // print(temp.refX.toString());
+    //     // print(temp.refY.toString());
+    //     //change the coordinate of current point to prepare for the next round
+    //     currentX = nextX;
+    //     currentY = nextY;
+    //     result.add(temp);
+    //     dirCount++;
+    //     if (dirCount == 2) {
+    //       direction = !direction;
+    //       dirCount = 0;
+    //     }
+    //   }
 
-    return result;
+    //   return result;
+    // }
   }
 
   @override
@@ -151,50 +154,49 @@ class CurvePainter extends CustomPainter {
     // print('width in paint: $_width');
     // print('height in paint: $_height');
     final double _conicWeight = 1.5;
-    var curveSegmentInfo = generateCurveSegment(1.8 * _width / 20,
-        0.95 * _height / 20.7, _width, _height, 12, true, _conicWeight);
 
     var path = Path();
-    var lastPath = Path();
-    path.moveTo(2 * _width / 20, 1 * _height / 20);
-    // print(size.height.toString());
-    // print(size.width.toString());
-    // one 'S' shape(hardcode)
-    // path.conicTo(3 * _width / 20, 3 * _height / 20, 10 * _width / 20,
-    //     3 * _height / 20, _conicWeight);
-    // path.conicTo(17 * _width / 20, 3 * _height / 20, 18 * _width / 20,
-    //     5 * _height / 20, _conicWeight);
+    var dashedPath = Path();
 
-    for (int i = 0; i < curveSegmentInfo.length; i++) {
-      if (i == curveSegmentInfo.length - 1) {
-        lastPath.moveTo(
-          curveSegmentInfo[i - 1].destX,
-          curveSegmentInfo[i - 1].destY,
-        );
-        lastPath.conicTo(
-          curveSegmentInfo[i].refX,
-          curveSegmentInfo[i].refY,
-          curveSegmentInfo[i].destX,
-          curveSegmentInfo[i].destY,
-          curveSegmentInfo[i].curveWeight,
-        );
-        break;
+    //
+    path.moveTo(1 * _width / 8, 0.0);
+    dashedPath.moveTo(1 * _width / 8, 0.0);
+
+    for (int i = 1; i < dotList.length; i++) {
+      //1st curve segment
+      if (i % 12 == 0) {
+        if (dotList[i+1].status == 'cross') {
+          dashedPath.conicTo(2*_width/8, 1/2*_height/8+i/12*_height,
+              2.75*_width/8, 1/2*_height/8+i/12*_height,_conicWeight);
+        }
+        if (dotList[i+1].status == 'ticked') {
+          path.conicTo(2*_width/8, 1/2*_height/8+i/12*_height, 2.75*_width/8,
+              1/2*_height/8+i/12*_height, _conicWeight);
+        }
+        path.moveTo(2*_width/8, 1/2*_height/8+i/12*_height);
+        dashedPath.moveTo(2*_width/8, 1/2*_height/8+i/12*_height);
       }
-      path.conicTo(
-        curveSegmentInfo[i].refX,
-        curveSegmentInfo[i].refY,
-        curveSegmentInfo[i].destX,
-        curveSegmentInfo[i].destY,
-        curveSegmentInfo[i].curveWeight,
-      );
+      //2nd curve segment
+      if(i % 12 == 1){
+        if (dotList[i+1].status == 'cross') {
+          dashedPath.conicTo(3*_width/8, 3/4*_height/8+i/12*_height,
+              3.75*_width/8, 3/4*_height/8+i/12*_height,_conicWeight);
+        }
+        if (dotList[i+1].status == 'ticked') {
+          path.conicTo(3*_width/8, 3/42*_height/8+i/12*_height, 3.75*_width/8,
+              3/4*_height/8+i/12*_height, _conicWeight);
+        }
+        path.moveTo(3*_width/8, 3/4*_height/8+i/12*_height);
+        dashedPath.moveTo(3*_width/8, 3/4*_height/8+i/12*_height);
+        //3rd curve segment
+        
+      }
+      
     }
-
-    // path.conicTo(56, 117, 205, 117, 1.5);
-    // path.conicTo(354, 117, 375, 195, 1.5);
     canvas.drawPath(path, paint);
     canvas.drawPath(
       dashPath(
-        lastPath,
+        dashedPath,
         dashArray: CircularIntervalList<double>([15.0, 10.5]),
       ),
       paint,
