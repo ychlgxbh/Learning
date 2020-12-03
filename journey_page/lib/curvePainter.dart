@@ -163,9 +163,9 @@ class CurvePainter extends CustomPainter {
     path.moveTo(1 * _width / 8, 0.0);
     dashedPath.moveTo(1 * _width / 8, 0.0);
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 13; i++) {
       //1st curve segment
-      if (i % 12 == 0) {
+      if (i == 0) {
         if (dotList[i + 1].status == Status.FAIL) {
           dashedPath.conicTo(
               1.2 * _width / 8,
@@ -205,13 +205,14 @@ class CurvePainter extends CustomPainter {
               7 / 8 * _height / 8 + i ~/ 12 * _height,
               _conicWeight);
         }
-        path.moveTo(2.6 * _width / 8, 7.2 / 8 * _height / 8 + i ~/ 12 * _height);
+        path.moveTo(
+            2.6 * _width / 8, 7.2 / 8 * _height / 8 + i ~/ 12 * _height);
         dashedPath.moveTo(
             2.6 * _width / 8, 7.2 / 8 * _height / 8 + i ~/ 12 * _height);
         print('second curve');
       }
       // 3rd curve segment
-      if (i % 12 == 3) {
+      if (i % 12 == 2) {
         if (dotList[i + 1].status == Status.FAIL) {
           dashedPath.conicTo(
               3.25 * _width / 8,
@@ -230,32 +231,33 @@ class CurvePainter extends CustomPainter {
         }
       }
       //4th curve segment
+      if (i % 12 == 3) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              4.75 * _width / 8,
+              1 * _height / 8 + i ~/ 12 * _height,
+              5 * _width / 8,
+              8.5 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              4.75 * _width / 8,
+              1 * _height / 8 + i ~/ 12 * _height,
+              5 * _width / 8,
+              8.5 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        print('4th segment');
+        path.moveTo(
+            4.9 * _width / 8, 8.3 / 8 * _height / 8 + i ~/ 12 * _height);
+        dashedPath.moveTo(
+            4.9 * _width / 8, 8.3 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+      //5th curve segment
       if (i % 12 == 4) {
         if (dotList[i + 1].status == Status.FAIL) {
           dashedPath.conicTo(
-              4.75 * _width / 8,
-              1 * _height / 8 + i ~/ 12 * _height,
-              5 * _width / 8,
-              8.5 / 8 * _height / 8 + i ~/ 12 * _height,
-              _conicWeight);
-        }
-        if (dotList[i + 1].status == Status.TICK) {
-          path.conicTo(
-              4.75 * _width / 8,
-              1 * _height / 8 + i ~/ 12 * _height,
-              5 * _width / 8,
-              8.5 / 8 * _height / 8 + i ~/ 12 * _height,
-              _conicWeight);
-        }
-        print('4th segment');
-        path.moveTo(4.9 * _width / 8, 8.3 / 8 * _height / 8 + i ~/ 12 * _height);
-        dashedPath.moveTo(
-           4.9 * _width / 8, 8.3 / 8 * _height / 8 + i ~/ 12 * _height);
-      }
-      //5th curve segment
-      if (i % 12 == 5) {
-        if (dotList[i + 1].status == Status.FAIL) {
-          dashedPath.conicTo(
               5.75 * _width / 8,
               1 * _height / 8 + i ~/ 12 * _height,
               6 * _width / 8,
@@ -265,22 +267,23 @@ class CurvePainter extends CustomPainter {
         if (dotList[i + 1].status == Status.TICK) {
           path.conicTo(
               5.75 * _width / 8,
-            8.8/8 * _height / 8 + i ~/ 12 * _height,
+              8.8 / 8 * _height / 8 + i ~/ 12 * _height,
               6 * _width / 8,
               9.5 / 8 * _height / 8 + i ~/ 12 * _height,
               _conicWeight);
         }
-        print('4th segment');
-        path.moveTo(5.9 * _width / 8, 9.3 / 8 * _height / 8 + i ~/ 12 * _height);
+        print('5th segment');
+        path.moveTo(
+            5.9 * _width / 8, 9.3 / 8 * _height / 8 + i ~/ 12 * _height);
         dashedPath.moveTo(
             5 * _width / 8, 8.4 / 8 * _height / 8 + i ~/ 12 * _height);
       }
       //6th curve segment
-      if (i % 12 == 6) {
+      if (i % 12 == 5) {
         if (dotList[i + 1].status == Status.FAIL) {
           dashedPath.conicTo(
               6.8 * _width / 8,
-              11/8 * _height / 8 + i ~/ 12 * _height,
+              11 / 8 * _height / 8 + i ~/ 12 * _height,
               7 * _width / 8,
               16 / 8 * _height / 8 + i ~/ 12 * _height,
               _conicWeight);
@@ -288,15 +291,156 @@ class CurvePainter extends CustomPainter {
         if (dotList[i + 1].status == Status.TICK) {
           path.conicTo(
               6.8 * _width / 8,
-            11/8 * _height / 8 + i ~/ 12 * _height,
+              11 / 8 * _height / 8 + i ~/ 12 * _height,
               7 * _width / 8,
-              16/ 8 * _height / 8 + i ~/ 12 * _height,
+              16 / 8 * _height / 8 + i ~/ 12 * _height,
               _conicWeight);
         }
-        print('4th segment');
-        path.moveTo(6.8 * _width / 8, 11 / 8 * _height / 8 + i ~/ 12 * _height);
+        print('6th segment');
+        path.moveTo(7 * _width / 8, 15.5 / 8 * _height / 8 + i ~/ 12 * _height);
         dashedPath.moveTo(
-            6.8 * _width / 8, 11 / 8 * _height / 8 + i ~/ 12 * _height);
+            7 * _width / 8, 15.5 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+      //7th curve segment
+      if (i % 12 == 6) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              6.8 * _width / 8,
+              11 / 8 * _height / 8 + i ~/ 12 * _height,
+              7 * _width / 8,
+              16 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              6.8 * _width / 8,
+              21 / 8 * _height / 8 + i ~/ 12 * _height,
+              6 * _width / 8,
+              22 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        print('6th segment');
+        path.moveTo(
+            6.05 * _width / 8, 21.9 / 8 * _height / 8 + i ~/ 12 * _height);
+        dashedPath.moveTo(
+            6.05 * _width / 8, 21.9 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+      // 8th curve segment
+      if (i % 12 == 7) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              6.8 * _width / 8,
+              11 / 8 * _height / 8 + i ~/ 12 * _height,
+              7 * _width / 8,
+              16 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              5.8 * _width / 8,
+              22.8 / 8 * _height / 8 + i ~/ 12 * _height,
+              5 * _width / 8,
+              23 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        print('6th segment');
+        path.moveTo(
+            5.05 * _width / 8, 22.83 / 8 * _height / 8 + i ~/ 12 * _height);
+        dashedPath.moveTo(
+            5.05 * _width / 8, 22.83 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+
+      // 9th curve segment
+      if (i % 12 == 8) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              4.8 * _width / 8,
+              23.4 / 8 * _height / 8 + i ~/ 12 * _height,
+              4 * _width / 8,
+              23.5 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              4.8 * _width / 8,
+              23.4 / 8 * _height / 8 + i ~/ 12 * _height,
+              4 * _width / 8,
+              23.5 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        print('6th segment');
+        path.moveTo(4.1 * _width / 8, 23.5 / 8 * _height / 8 + i ~/ 12 * _height);
+        dashedPath.moveTo(
+            4.1 * _width / 8, 23.5 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+      // 10th curve segment
+      if (i % 12 == 10) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              3.8 * _width / 8,
+              24 / 8 * _height / 8 + i ~/ 12 * _height,
+              3 * _width / 8,
+              24.1 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              3.8 * _width / 8,
+              24 / 8 * _height / 8 + i ~/ 12 * _height,
+              3 * _width / 8,
+              24.1 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        print('6th segment');
+        path.moveTo(3 * _width / 8, 24.1 / 8 * _height / 8 + i ~/ 12 * _height);
+        dashedPath.moveTo(
+            3 * _width / 8, 24.1 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+      // 11th curve segment
+      if (i % 12 == 11) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              4.8 * _width / 8,
+              23.4 / 8 * _height / 8 + i ~/ 12 * _height,
+              4 * _width / 8,
+              23.5 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              2 * _width / 8,
+              24 / 8 * _height / 8 + i ~/ 12 * _height,
+              1.58 * _width / 8,
+              27 / 8 * _height / 8 + i ~/ 12 * _height,
+              _conicWeight);
+        }
+        print('6th segment');
+        path.moveTo(1.6 * _width / 8, 26.9 / 8 * _height / 8 + i ~/ 12 * _height);
+        dashedPath.moveTo(
+            4 * _width / 8, 23.5 / 8 * _height / 8 + i ~/ 12 * _height);
+      }
+      // 12th curve segment
+      if (i == 12) {
+        if (dotList[i + 1].status == Status.FAIL) {
+          dashedPath.conicTo(
+              4.8 * _width / 8,
+              23.4 / 8 * _height / 8 ,
+              4 * _width / 8,
+              23.5 / 8 * _height / 8 ,
+              _conicWeight);
+        }
+        if (dotList[i + 1].status == Status.TICK) {
+          path.conicTo(
+              1.1 * _width / 8,
+              30 / 8 * _height / 8 ,
+              1 * _width / 8,
+              32 / 8 * _height / 8 ,
+              _conicWeight);
+        }
+        print('6th segment');
+        path.moveTo(4 * _width / 8, 23.5 / 8 * _height / 8 );
+        dashedPath.moveTo(
+            4 * _width / 8, 23.5 / 8 * _height / 8 );
       }
     }
     canvas.drawPath(path, paint);
