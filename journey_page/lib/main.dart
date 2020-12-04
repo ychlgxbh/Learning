@@ -44,17 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
     0: Text('       Journey Map       '),
     1: Text('       Activity       '),
   };
+  List<Dot> totalDots = [];
   @override
   void initState() {
-    // Future response;
-    // response = loadAsset();
-    // response.then((value) {
-    //   print(value.length);
-    //   print(value);
-    //   print(userInfoFromJson(value).dots.length);
-
-    // });
     super.initState();
+    loadAsset().then((value) {
+      setState(() {
+        totalDots = userInfoFromJson(value).dots;
+      });
+    });
+  }
+
+  Future<String> loadAsset() async {
+    print('in loadasset');
+    return await rootBundle.loadString('lib/asset/jsons/journeyMap.json');
   }
 
   // Future<String> loadAsset() async {
@@ -92,12 +95,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // );
     List<Widget> _segments = [
       Container(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(5),
         color: Theme.of(context).primaryColor,
         child: Column(
           children: [
             Container(
-              height: _mediaQuery.size.height * 0.23,
+              height: _mediaQuery.size.height * 0.25,
               width: double.infinity,
               child: Column(
                 children: [
@@ -112,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Container(
-                    height: _mediaQuery.size.height * 0.17,
+                    height: _mediaQuery.size.height * 0.20,
                     child: Card(
                       color: Theme.of(context).primaryColorDark,
                       child: Column(
@@ -145,10 +148,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               child: Container(
-                height: _mediaQuery.size.height * 0.45,
+                padding: EdgeInsets.only(
+                  top: 10,
+                ),
+                height: _mediaQuery.size.height * 0.40,
                 // width: double.infinity,
                 //color: Colors.purple,
-                child: BlockListView(_bodyWidth, _bodyHeight, 1),
+                child: totalDots.length == 0
+                    ? Container()
+                    : BlockListView(
+                        _bodyWidth,
+                        _bodyHeight,
+                        totalDots,
+                      ),
               ),
             )
           ],
@@ -195,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: _mediaQuery.size.height * 0.08,
+        height: _mediaQuery.size.height * 0.12,
         child: Container(
           padding: EdgeInsets.fromLTRB(20, 0, 4, 0),
           child: Row(

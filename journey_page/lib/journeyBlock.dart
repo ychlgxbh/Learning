@@ -101,7 +101,7 @@ class JourneyBlock extends StatelessWidget {
         child: CustomPaint(
       painter: CurvePainter(dotList),
       size: Size(MediaQuery.of(context).size.width,
-          MediaQuery.of(context).size.height),
+          MediaQuery.of(context).size.height/3),
     ));
   }
 }

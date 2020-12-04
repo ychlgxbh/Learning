@@ -12,9 +12,13 @@ import 'package:journey_page/userInfo.dart';
 class BlockListView extends StatefulWidget {
   final double _bodyWidth;
   final double _bodyHeight;
-  final int _totalPages;
+  List<Dot> allDots = [];
 
-  BlockListView(this._bodyWidth, this._bodyHeight, this._totalPages);
+  BlockListView(
+    this._bodyWidth,
+    this._bodyHeight,
+    this.allDots,
+  );
   @override
   _BlockListViewState createState() => _BlockListViewState();
 }
@@ -25,50 +29,55 @@ class _BlockListViewState extends State<BlockListView> {
   Future response;
   var parsedData;
   var dotList;
+  var dotList2;
+  List<List<Dot>> availableDotList = [];
 
   final _pagingController = PagingController<int, List<Dot>>(
     firstPageKey: 0,
   );
 
-  Future<String> loadAsset() async {
-    print('in loadasset');
-    return await rootBundle.loadString('lib/asset/jsons/journeyMap.json');
-  }
+  // Future<String> loadAsset() async {
+  //   print('in loadasset');
+  //   return await rootBundle.loadString('lib/asset/jsons/journeyMap.json');
+  // }
 
-  getDotList() async {
-    await response.then((value) {
-      print(value.length);
-      print(value);
-      parsedData = userInfoFromJson(value);
-      dotList = parsedData.dots.sublist(0, 24);
-      if (dotList == null) {
-        print('is null');
+  void getDotList() {
+    int index = 0;
+    while (true) {
+      if (index + 13 < widget.allDots.length) {
+       // print(availableDotList.length.toString());
+        availableDotList.add(widget.allDots.sublist(index, index + 13));
+      //  print(availableDotList.length.toString());
+      } else {
+        availableDotList
+            .add(widget.allDots.sublist(index, widget.allDots.length - 1));
+        break;
       }
-      print('here');
-      print(dotList.length.toString());
-    });
+      index += 12;
+    }
+    print('total dotList:');
+    print(availableDotList.length.toString());
   }
 
   @override
   void initState() {
+    super.initState();
+    getDotList();
     _pagingController.addPageRequestListener((pageKey) {
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
         _fetchPage(pageKey);
       });
     });
-    super.initState();
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      print('b4 load');
-      response = loadAsset();
-      print('after load');
-      await getDotList();
-      print(response.then((value) => null));
       List<List<Dot>> newItems = [];
-      newItems.add(dotList);
-      final isLastPage = _pageCount == widget._totalPages - 1;
+      if (_pageCount < availableDotList.length) {
+        newItems.add(availableDotList[_pageCount]);
+      }
+      print('newItems now have ${newItems.length} items');
+      final isLastPage = _pageCount == availableDotList.length - 1;
       if (isLastPage) {
         print('reach last page');
         _pagingController.appendLastPage(newItems);
@@ -78,6 +87,7 @@ class _BlockListViewState extends State<BlockListView> {
         _pagingController.appendPage(newItems, nextPageKey);
         print('appended');
         _pageCount++;
+        print('current pageCount: $_pageCount');
       }
     } catch (error) {
       print('Errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror');
@@ -87,18 +97,22 @@ class _BlockListViewState extends State<BlockListView> {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
-    // if(dotList == null){
-    //   print('is null');
-    // }
-    return PagedListView(
-      padding: EdgeInsets.zero,
-      pagingController: _pagingController,
-      builderDelegate: PagedChildBuilderDelegate(
-        itemBuilder: (context, item, index) =>
-            new JourneyBlock(widget._bodyWidth, widget._bodyHeight, dotList),
-      ),
-    );
+    if (availableDotList.length != 0) {
+      print('build');
+      // if(dotList == null){
+      //   print('is null');
+      // }
+      return PagedListView(
+        padding: EdgeInsets.zero,
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate(
+          itemBuilder: (context, item, index) =>
+              new JourneyBlock(widget._bodyWidth, widget._bodyHeight, item),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
