@@ -43,11 +43,11 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
       curve: Curves.fastOutSlowIn,
     );
     _width = widget.dot.status == Status.CURRENT_LOCK
-        ? 30
-        : (widget.dot.dotType == Type.DAILY ? 20 : 40);
+        ? 35
+        : (widget.dot.dotType == Type.DAILY ? 25 : 45);
     _height = widget.dot.status == Status.CURRENT_LOCK
-        ? 30
-        : (widget.dot.dotType == Type.DAILY ? 20 : 40);
+        ? 35
+        : (widget.dot.dotType == Type.DAILY ? 25 : 45);
     if (widget.dot.status == Status.CURRENT_LOCK) {
       _hasReachedCurrentLock = true;
     }
@@ -74,53 +74,53 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
     }
     switch (widget.index) {
       case 0:
-        _coordinateX = 0.8 * widget.totalWidth / 8;
+        _coordinateX = 0.65 * widget.totalWidth / 8;
         _coordinateY = 0.0;
         break;
 
       case 1:
-        _coordinateX = 1.7 * widget.totalWidth / 8;
-        _coordinateY = 5 / 8 * widget.totalHeight / 8;
+        _coordinateX = 1.6 * widget.totalWidth / 8;
+        _coordinateY = 4 / 8 * widget.totalHeight / 8;
         break;
       case 2:
-        _coordinateX = 2.6 * widget.totalWidth / 8;
-        _coordinateY = 7.2 / 8 * widget.totalHeight / 8;
+        _coordinateX = 2.7 * widget.totalWidth / 8;
+        _coordinateY = 5.5 / 8 * widget.totalHeight / 8;
         break;
       case 3:
-        _coordinateX = 4 * widget.totalWidth / 8;
-        _coordinateY = 8 / 8 * widget.totalHeight / 8;
+        _coordinateX = 3.7 * widget.totalWidth / 8;
+        _coordinateY = 5.6 / 8 * widget.totalHeight / 8;
         break;
       case 4:
-        _coordinateX = 4.9 * widget.totalWidth / 8;
-        _coordinateY = 8.3 / 8 * widget.totalHeight / 8;
+        _coordinateX = 4.8 * widget.totalWidth / 8;
+        _coordinateY = 6.2 / 8 * widget.totalHeight / 8;
         break;
       case 5:
-        _coordinateX = 5.9 * widget.totalWidth / 8;
-        _coordinateY = 9.3 / 8 * widget.totalHeight / 8;
+        _coordinateX = 5.85 * widget.totalWidth / 8;
+        _coordinateY = 8.5 / 8 * widget.totalHeight / 8;
         break;
       case 6:
-        _coordinateX = 7 * widget.totalWidth / 8;
-        _coordinateY = 15.5 / 8 * widget.totalHeight / 8;
+        _coordinateX = 6.45 * widget.totalWidth / 8;
+        _coordinateY = 13.8 / 8 * widget.totalHeight / 8;
         break;
       case 7:
-        _coordinateX = 6.05 * widget.totalWidth / 8;
-        _coordinateY = 21.9 / 8 * widget.totalHeight / 8;
+        _coordinateX = 5.85 * widget.totalWidth / 8;
+        _coordinateY = 19 / 8 * widget.totalHeight / 8;
         break;
       case 8:
-        _coordinateX = 5.05 * widget.totalWidth / 8;
-        _coordinateY = 22.83 / 8 * widget.totalHeight / 8;
+        _coordinateX = 4.8 * widget.totalWidth / 8;
+        _coordinateY = 20.5 / 8 * widget.totalHeight / 8;
         break;
       case 9:
-        _coordinateX = 4.1 * widget.totalWidth / 8;
-        _coordinateY = 23.5 / 8 * widget.totalHeight / 8;
+        _coordinateX = 3.7 * widget.totalWidth / 8;
+        _coordinateY = 21 / 8 * widget.totalHeight / 8;
         break;
       case 10:
-        _coordinateX = 3 * widget.totalWidth / 8;
-        _coordinateY = 24.1 / 8 * widget.totalHeight / 8;
+        _coordinateX = 2.7 * widget.totalWidth / 8;
+        _coordinateY = 21.5 / 8 * widget.totalHeight / 8;
         break;
       case 11:
-        _coordinateX = 2 * widget.totalWidth / 8;
-        _coordinateY = 26.9 / 8 * widget.totalHeight / 8;
+        _coordinateX = 1.4 * widget.totalWidth / 8;
+        _coordinateY = 23 / 8 * widget.totalHeight / 8;
         break;
     }
   }
@@ -142,18 +142,24 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
         child: ScaleTransition(
           scale: _animation,
           alignment: Alignment.center,
-          child: RawMaterialButton(
-            
-            constraints: BoxConstraints(minWidth: 10, minHeight: 10),
-            onPressed: null,
-            fillColor: Colors.white,
-            shape: CircleBorder(),
-            child: Image.asset(
-              _imageName,
-              width: _width,
-              height: _height,
+          child: SizedBox(
+            width: 45,
+            height: 45,
+            child: Container(
+              child: RawMaterialButton(
+                // materialTapTargetSize: MaterialTapTargetSize.padded,
+                constraints: BoxConstraints(minWidth: 0.0, minHeight: 0.0),
+                onPressed: null,
+                fillColor: Colors.transparent,
+                shape: CircleBorder(),
+                child: Image.asset(
+                  _imageName,
+                  width: _width,
+                  height: _height,
+                ),
+                padding: EdgeInsets.all(0.0),
+              ),
             ),
-            padding: EdgeInsets.all(0.0),
           ),
         ),
       );
@@ -161,18 +167,25 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
       return Positioned(
         left: _coordinateX,
         top: _coordinateY,
-        child: RawMaterialButton(
-          constraints: BoxConstraints(minWidth: 10, minHeight: 10),
-          onPressed: null,
-          fillColor: Colors.white,
-          shape: CircleBorder(),
-          child: Image.asset(
-            _imageName,
-            fit: BoxFit.fill,
-            width: _width,
-            height: _height,
+        //child: Text('H'),
+        child: SizedBox(
+          width: 45,
+          height: 45,
+          child: Container(
+            child: RawMaterialButton(
+              // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              constraints: BoxConstraints(minWidth: 0.0, minHeight: 0.0),
+              onPressed: null,
+              fillColor: Colors.amber,
+              shape: CircleBorder(),
+              child: Image.asset(
+                _imageName,
+                width: _width,
+                height: _height,
+              ),
+              padding: EdgeInsets.all(0.0),
+            ),
           ),
-          padding: EdgeInsets.all(0.0),
         ),
       );
     }

@@ -33,8 +33,8 @@ class CurvePainter extends CustomPainter {
     var dashedPath = Path();
 
     //
-    path.moveTo(1 * _width / 8, 0.0);
-    dashedPath.moveTo(1 * _width / 8,  1 / 8 * _height / 8);
+    path.moveTo(1 * _width / 8, 0.0,);
+    dashedPath.moveTo(1 * _width / 8,  0.0,);
     print('in paint method');
     for (int i = 0; i < dotList.length; i++) {
       //1st curve segment

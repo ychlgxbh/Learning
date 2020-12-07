@@ -41,7 +41,7 @@ class JourneyBlock extends StatelessWidget {
             (e) => IconWidget(
               e,
               dotList.indexOf(e),
-              _bodyWidth,
+              _bodyWidth ,
               2 * _bodyHeight / 2.8,
             ),
           )
