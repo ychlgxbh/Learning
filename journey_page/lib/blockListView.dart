@@ -34,6 +34,7 @@ class _BlockListViewState extends State<BlockListView> {
 
   final _pagingController = PagingController<int, List<Dot>>(
     firstPageKey: 0,
+    invisibleItemsThreshold: 3,
   );
 
   // Future<String> loadAsset() async {
@@ -44,13 +45,13 @@ class _BlockListViewState extends State<BlockListView> {
   void getDotList() {
     int index = 0;
     while (true) {
-      if (index + 13 < widget.allDots.length) {
-       // print(availableDotList.length.toString());
-        availableDotList.add(widget.allDots.sublist(index, index + 13));
-      //  print(availableDotList.length.toString());
+      if (index + 12 < widget.allDots.length) {
+        // print(availableDotList.length.toString());
+        availableDotList.add(widget.allDots.sublist(index, index + 12));
+        //  print(availableDotList.length.toString());
       } else {
         availableDotList
-            .add(widget.allDots.sublist(index, widget.allDots.length - 1));
+            .add(widget.allDots.sublist(index, widget.allDots.length ));
         break;
       }
       index += 12;
@@ -64,27 +65,36 @@ class _BlockListViewState extends State<BlockListView> {
     super.initState();
     getDotList();
     _pagingController.addPageRequestListener((pageKey) {
-      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-        _fetchPage(pageKey);
-      });
+      _fetchPage(pageKey);
+      // SchedulerBinding.instance.addPostFrameCallback((_) {
+      //   _fetchPage(pageKey);
+      // });
     });
   }
 
+  List<List<Dot>> toBePassed = [];
   Future<void> _fetchPage(int pageKey) async {
+    print('fetching');
     try {
       List<List<Dot>> newItems = [];
       if (_pageCount < availableDotList.length) {
         newItems.add(availableDotList[_pageCount]);
+        toBePassed = newItems;
       }
       print('newItems now have ${newItems.length} items');
       final isLastPage = _pageCount == availableDotList.length - 1;
       if (isLastPage) {
         print('reach last page');
-        _pagingController.appendLastPage(newItems);
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          _pagingController.appendLastPage(newItems);
+        });
       } else {
         print('${_pageCount + 1}th page fetched');
         final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey);
+
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          _pagingController.appendPage(newItems, nextPageKey);
+        });
         print('appended');
         _pageCount++;
         print('current pageCount: $_pageCount');
@@ -106,8 +116,12 @@ class _BlockListViewState extends State<BlockListView> {
         padding: EdgeInsets.zero,
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate(
-          itemBuilder: (context, item, index) =>
-              new JourneyBlock(widget._bodyWidth, widget._bodyHeight, item),
+          itemBuilder: (context, item, index) => JourneyBlock(
+            widget._bodyWidth,
+            widget._bodyHeight,
+            item,
+            index,
+          ),
         ),
       );
     } else {

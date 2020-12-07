@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     loadAsset().then((value) {
       setState(() {
+        print('setState in main is called');
         totalDots = userInfoFromJson(value).dots;
       });
     });
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _bodyHeight = _mediaQuery.size.height;
-    final _bodyWidth = (_mediaQuery.size.width - 22);
+    final _bodyWidth = _mediaQuery.size.width ;
 
     // final List<DrawingPoint> _drawingPoint =
     //     new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 11);
@@ -151,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.only(
                   top: 10,
                 ),
-                height: _mediaQuery.size.height * 0.40,
+                height: _mediaQuery.size.height * 0.41,
                 // width: double.infinity,
                 //color: Colors.purple,
                 child: totalDots.length == 0
