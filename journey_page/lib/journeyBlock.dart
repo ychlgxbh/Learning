@@ -11,10 +11,11 @@ class JourneyBlock extends StatelessWidget {
   final double _bodyHeight;
   //final int _numberOfSegment;
   final int index;
+  final int _changeOpacityPosition;
 
   final List<Dot> dotList;
 
-  JourneyBlock(this._bodyWidth, this._bodyHeight, this.dotList, this.index);
+  JourneyBlock(this._bodyWidth, this._bodyHeight, this.dotList, this.index, this._changeOpacityPosition);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class JourneyBlock extends StatelessWidget {
         painter: CurvePainter(
           dotList,
           index,
+          _changeOpacityPosition,
         ),
         size: Size(
           _bodyWidth,
@@ -43,12 +45,13 @@ class JourneyBlock extends StatelessWidget {
               dotList.indexOf(e),
               _bodyWidth ,
               2 * _bodyHeight / 2.8,
+              _changeOpacityPosition,
             ),
           )
           .toList(),
     );
-    print('stackChildren length: ${stackChildren.length}');
-
+    // print('stackChildren length: ${stackChildren.length}');
+    // print('changeOpacityPosition: $_changeOpacityPosition');
     return Container(
       margin: EdgeInsets.zero,
       height: _bodyHeight / 2.8,

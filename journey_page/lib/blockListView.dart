@@ -30,11 +30,14 @@ class _BlockListViewState extends State<BlockListView> {
   var parsedData;
   var dotList;
   var dotList2;
+  bool _hasReachedCurrentLock = false;
+  bool _moreCheck = true;
+  int _changeOpacityPosition = 0;
   List<List<Dot>> availableDotList = [];
 
   final _pagingController = PagingController<int, List<Dot>>(
     firstPageKey: 0,
-    invisibleItemsThreshold: 3,
+    invisibleItemsThreshold: 1,
   );
 
   // Future<String> loadAsset() async {
@@ -63,6 +66,17 @@ class _BlockListViewState extends State<BlockListView> {
   @override
   void initState() {
     super.initState();
+    for(int i = 0; i < widget.allDots.length; i++){
+          widget.allDots[i].sequenceNum = i;
+          if(widget.allDots[i].status == Status.CURRENT_LOCK){
+            _hasReachedCurrentLock = true;
+          }
+          if(_hasReachedCurrentLock && widget.allDots[i].dotType != Type.DAILY && _moreCheck){
+            _changeOpacityPosition = i;
+            _moreCheck = false;
+          }
+        }
+      
     getDotList();
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
@@ -121,6 +135,7 @@ class _BlockListViewState extends State<BlockListView> {
             widget._bodyHeight,
             item,
             index,
+            _changeOpacityPosition,
           ),
         ),
       );

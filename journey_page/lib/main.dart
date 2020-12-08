@@ -39,6 +39,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _sharedValue = 0;
+  int _currentLockPosition = 0;
 
   final Map<int, Widget> _label = <int, Widget>{
     0: Text('       Journey Map       '),
@@ -48,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    
     loadAsset().then((value) {
       setState(() {
         print('setState in main is called');

@@ -6,11 +6,13 @@ class IconWidget extends StatefulWidget {
   final int index;
   final double totalWidth;
   final double totalHeight;
+  final int changeOpacityPosition;
   IconWidget(
     this.dot,
     this.index,
     this.totalWidth,
     this.totalHeight,
+    this.changeOpacityPosition,
   );
 
   @override
@@ -27,6 +29,7 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
 
   String _imageName;
   static bool _hasReachedCurrentLock = false;
+  // static bool _changeOpacity = false;
   @override
   void initState() {
     super.initState();
@@ -51,6 +54,9 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
     if (widget.dot.status == Status.CURRENT_LOCK) {
       _hasReachedCurrentLock = true;
     }
+    // if(_hasReachedCurrentLock && widget.dot.dotType != Type.DAILY){
+    //   _changeOpacity = true;
+    // }
     switch (widget.dot.dotType) {
       case Type.DAILY:
         _imageName = widget.dot.status == Status.CURRENT_LOCK
@@ -63,8 +69,11 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
         _imageName = widget.dot.status == Status.LOCK
             ? (_hasReachedCurrentLock
                 ? 'lib/asset/Icon/medalTBA@2x.png'
-                : 'lib/asset/Icon/medal@2x.png')
+                : 'lib/asset/Icon/medal_white@2x.png')
             : 'lib/asset/Icon/medal_active@2x.png';
+        if (_hasReachedCurrentLock) {
+          _hasReachedCurrentLock = false;
+        }
         break;
       case Type.TIER:
         _imageName = widget.dot.status == Status.LOCK
@@ -145,20 +154,18 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
           child: SizedBox(
             width: 45,
             height: 45,
-            child: Container(
-              child: RawMaterialButton(
-                // materialTapTargetSize: MaterialTapTargetSize.padded,
-                constraints: BoxConstraints(minWidth: 0.0, minHeight: 0.0),
-                onPressed: null,
-                fillColor: Colors.transparent,
-                shape: CircleBorder(),
-                child: Image.asset(
-                  _imageName,
-                  width: _width,
-                  height: _height,
-                ),
-                padding: EdgeInsets.all(0.0),
+            child: RawMaterialButton(
+              // materialTapTargetSize: MaterialTapTargetSize.padded,
+              constraints: BoxConstraints(minWidth: 0.0, minHeight: 0.0),
+              onPressed: null,
+              fillColor: Colors.transparent,
+              shape: CircleBorder(),
+              child: Image.asset(
+                _imageName,
+                width: _width,
+                height: _height,
               ),
+              padding: EdgeInsets.all(0.0),
             ),
           ),
         ),
@@ -171,12 +178,13 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
         child: SizedBox(
           width: 45,
           height: 45,
-          child: Container(
+          child: Opacity(
+            opacity: widget.dot.sequenceNum > widget.changeOpacityPosition ? 0.6 : 1.0,
             child: RawMaterialButton(
               // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               constraints: BoxConstraints(minWidth: 0.0, minHeight: 0.0),
               onPressed: null,
-              fillColor: Colors.amber,
+              fillColor: Colors.transparent,
               shape: CircleBorder(),
               child: Image.asset(
                 _imageName,

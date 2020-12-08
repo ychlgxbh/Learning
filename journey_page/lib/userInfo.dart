@@ -52,6 +52,11 @@ class Dot {
     int goalsPerWeek;
     int rewardedDays;
     DateTime nextWeekStartOn;
+    int sequenceNum;
+
+    void addSequenceNum(int seq){
+      sequenceNum = seq;
+    }
 
     factory Dot.fromJson(Map<String, dynamic> json) => Dot(
         dotType: typeValues.map[json["dot_type"]],

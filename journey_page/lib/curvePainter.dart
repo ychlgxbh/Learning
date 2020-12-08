@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:journey_page/curvePathInfo.dart';
 import 'package:journey_page/userInfo.dart';
@@ -10,17 +10,23 @@ class CurvePainter extends CustomPainter {
   static int callingCount = 0;
   final List<Dot> dotList;
   int index;
-  
-  CurvePainter(this.dotList, this.index, );
+  static bool _hasReachedCurrentLock = false;
+  static bool _colorChange = false;
+  int _changeOpacityPosition;
+  CurvePainter(
+    this.dotList,
+    this.index,
+    this._changeOpacityPosition,
+  );
   @override
   bool shouldRepaint(CurvePainter oldDelegate) => false;
 
   @override
-  void paint(Canvas canvas, Size size, ) {
-    var paint = Paint();
-    paint.color = Colors.white;
-    paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = 15.0;
+  void paint(
+    Canvas canvas,
+    Size size,
+  ) {
+    // paint.imageFilter = ui.ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0,);
     final _width = size.width;
     final _height = 2 * size.height;
     print('width in canvas: $_width');
@@ -28,18 +34,35 @@ class CurvePainter extends CustomPainter {
     // print('width in paint: $_width');
     // print('height in paint: $_height');
     final double _conicWeight = 1.2;
-
-    var path = Path();
-    var dashedPath = Path();
-
-    //
-    path.moveTo(1 * _width / 8, 0.0,);
-    dashedPath.moveTo(1 * _width / 8,  0.0,);
+    double _pathStartX = 1.09 * _width / 8;
+    double _pathStartY = 0.0;
     print('in paint method');
-    for (int i = 0; i < dotList.length; i++) {
-      //1st curve segment
 
+    for (int i = 0; i < dotList.length; i++) {
+      var paint = Paint();
+      var path = Path();
+      var dashedPath = Path();
+      paint.style = PaintingStyle.stroke;
+      paint.strokeWidth = 15.0;
+      // if (dotList[i].status == Status.CURRENT_LOCK) {
+      //   _hasReachedCurrentLock = true;
+      // }
+      // if (_hasReachedCurrentLock && dotList[i].dotType != Type.DAILY) {
+      //   _colorChange = true;
+      // }
+      paint.color = dotList[i].sequenceNum > _changeOpacityPosition ? Color.fromRGBO(255, 255, 255, 0.8) : Colors.white;
+      path.moveTo(
+        _pathStartX,
+        _pathStartY,
+      );
+      dashedPath.moveTo(
+        _pathStartX,
+        _pathStartY,
+      );
+
+      //1st curve segment
       if (i == 0) {
+        
         if (dotList[i].status != Status.FAIL) {
           path.conicTo(
             1.05 * _width / 8,
@@ -58,14 +81,8 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          1.7 * _width / 8,
-          5.5 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          1.7 * _width / 8,
-          5.5 / 8 * _height / 8,
-        );
+        _pathStartX = 1.7 * _width / 8;
+        _pathStartY = 5.5 / 8 * _height / 8;
         print('1st segment');
       }
 
@@ -90,14 +107,8 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          2.6 * _width / 8,
-          7.2 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          2.6 * _width / 8,
-          7.2 / 8 * _height / 8,
-        );
+        _pathStartX = 2.6 * _width / 8;
+        _pathStartY = 7.2 / 8 * _height / 8;
         print('2nd segment');
       }
 
@@ -121,15 +132,9 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          4 * _width / 8,
-          8 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          4 * _width / 8,
-          8 / 8 * _height / 8,
-        );
 
+        _pathStartX = 4 * _width / 8;
+        _pathStartY = 8 / 8 * _height / 8;
         print('3rd segment');
       }
       //4th curve segment
@@ -152,14 +157,10 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          4.9 * _width / 8,
-          8.25 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          4.9 * _width / 8,
-          8.25 / 8 * _height / 8,
-        );
+
+        _pathStartX = 4.9 * _width / 8;
+        _pathStartY = 8.25 / 8 * _height / 8;
+
         print('4th segment');
       }
 
@@ -183,14 +184,10 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          5.9 * _width / 8,
-          9.3 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          5.9 * _width / 8,
-          9.3 / 8 * _height / 8,
-        );
+
+        _pathStartX = 5.9 * _width / 8;
+        _pathStartY = 9.3 / 8 * _height / 8;
+
         print('5th segment');
       }
       //6th curve segment
@@ -213,14 +210,10 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          6.9 * _width / 8,
-          15.5 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          6.9 * _width / 8,
-          15.5 / 8 * _height / 8,
-        );
+
+        _pathStartX = 6.9 * _width / 8;
+        _pathStartY = 15.5 / 8 * _height / 8;
+
         print('6th segment');
       }
       //7th curve segment
@@ -243,14 +236,10 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          6.05 * _width / 8,
-          22.1 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          6.05 * _width / 8,
-          22.1 / 8 * _height / 8,
-        );
+
+        _pathStartX = 6.05 * _width / 8;
+        _pathStartY = 22.1 / 8 * _height / 8;
+
         print('7th segment');
       }
 
@@ -274,14 +263,10 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          5.05 * _width / 8,
-          22.96 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          5.05 * _width / 8,
-          22.96 / 8 * _height / 8,
-        );
+
+        _pathStartX = 5.05 * _width / 8;
+        _pathStartY = 22.96 / 8 * _height / 8;
+
         print('8th segment');
       }
 
@@ -301,19 +286,14 @@ class CurvePainter extends CustomPainter {
             4.8 * _width / 8,
             23.2 / 8 * _height / 8,
             4 * _width / 8,
-            23.4/ 8 * _height / 8,
+            23.4 / 8 * _height / 8,
             _conicWeight,
           );
         }
 
-        path.moveTo(
-          4.1 * _width / 8,
-          23.38 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          4.1 * _width / 8,
-          23.38 / 8 * _height / 8,
-        );
+        _pathStartX = 4.1 * _width / 8;
+        _pathStartY = 23.38 / 8 * _height / 8;
+
         print('9th segment');
       }
       // 10th curve segment
@@ -337,14 +317,10 @@ class CurvePainter extends CustomPainter {
             _conicWeight,
           );
         }
-        path.moveTo(
-          3 * _width / 8,
-          23.8 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-          3 * _width / 8,
-          23.8 / 8 * _height / 8,
-        );
+
+        _pathStartX = 3 * _width / 8;
+        _pathStartY = 23.8 / 8 * _height / 8;
+
         print('10th segment');
       }
 
@@ -369,14 +345,9 @@ class CurvePainter extends CustomPainter {
           );
         }
 
-        path.moveTo(
-          1.7 * _width / 8,
-          25.38 / 8 * _height / 8,
-        );
-        dashedPath.moveTo(
-         1.7 * _width / 8,
-          25.38 / 8 * _height / 8,
-        );
+        _pathStartX = 1.7 * _width / 8;
+        _pathStartY = 25.38 / 8 * _height / 8;
+
         print('11th segment');
       }
 
@@ -386,8 +357,8 @@ class CurvePainter extends CustomPainter {
           path.conicTo(
             1 * _width / 8,
             29 / 8 * _height / 8,
-            1 * _width / 8,
-            32.4 / 8 * _height / 8,
+            1.08 * _width / 8,
+            36 / 8 * _height / 8,
             _conicWeight,
           );
         }
@@ -402,7 +373,10 @@ class CurvePainter extends CustomPainter {
         }
         print('12th segment');
       }
-      canvas.drawPath(path, paint);
+      canvas.drawPath(
+        path,
+        paint,
+      );
       canvas.drawPath(
         dashPath(
           dashedPath,
