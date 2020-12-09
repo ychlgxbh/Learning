@@ -12,14 +12,22 @@ class JourneyBlock extends StatelessWidget {
   //final int _numberOfSegment;
   final int index;
   final int _changeOpacityPosition;
-
+  final List<String> _bodyTextList;
   final List<Dot> dotList;
 
-  JourneyBlock(this._bodyWidth, this._bodyHeight, this.dotList, this.index, this._changeOpacityPosition);
+  JourneyBlock(
+    this._bodyWidth,
+    this._bodyHeight,
+    this.dotList,
+    this.index,
+    this._changeOpacityPosition,
+    this._bodyTextList,
+  );
 
   @override
   Widget build(BuildContext context) {
-    print('build journey block');
+   
+    //get curve segments
     final paint = Positioned(
       left: 0.0,
       top: 0.0,
@@ -31,25 +39,40 @@ class JourneyBlock extends StatelessWidget {
         ),
         size: Size(
           _bodyWidth,
-          _bodyHeight / 2.8,
+          _bodyHeight / 2.81,
         ),
       ),
     );
+    //
     List<Widget> stackChildren = [];
     stackChildren.add(paint);
+    //get icons
     stackChildren.addAll(
       dotList
           .map(
             (e) => IconWidget(
               e,
               dotList.indexOf(e),
-              _bodyWidth ,
+              _bodyWidth,
               2 * _bodyHeight / 2.8,
               _changeOpacityPosition,
             ),
           )
           .toList(),
     );
+
+    stackChildren.addAll(
+      _bodyTextList.map(
+        (e) => Positioned(
+          left: _bodyTextList.indexOf(e) == 0 ? 1.8 * _bodyWidth / 8 : 2.8 * _bodyWidth / 8,
+          top: _bodyTextList.indexOf(e) == 0
+              ? (index == 0 ? 1 / 8 * _bodyHeight / 8 / 2.8 : 0.0)
+              : 30 / 8 * _bodyHeight / 8 / 2.8,
+          child: Text(e,style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        ),
+      ),
+    );
+
     // print('stackChildren length: ${stackChildren.length}');
     // print('changeOpacityPosition: $_changeOpacityPosition');
     return Container(
@@ -58,8 +81,9 @@ class JourneyBlock extends StatelessWidget {
       width: _bodyWidth,
       child: Container(
         width: _bodyWidth,
-        height: _bodyHeight/2.8,
+        height: _bodyHeight / 2.8,
         child: Stack(
+          overflow: Overflow.visible,
           fit: StackFit.expand,
           children: stackChildren,
         ),

@@ -39,8 +39,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _sharedValue = 0;
-  int _currentLockPosition = 0;
-
+  final _cornerRadius = 20.0;
   final Map<int, Widget> _label = <int, Widget>{
     0: Text('       Journey Map       '),
     1: Text('       Activity       '),
@@ -49,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    
+
     loadAsset().then((value) {
       setState(() {
         print('setState in main is called');
@@ -59,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> loadAsset() async {
-    print('in loadasset');
+    //print('in loadasset');
     return await rootBundle.loadString('lib/asset/jsons/journeyMap.json');
   }
 
@@ -72,101 +71,147 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _bodyHeight = _mediaQuery.size.height;
-    final _bodyWidth = _mediaQuery.size.width ;
+    final _bodyWidth = _mediaQuery.size.width;
 
-    // final List<DrawingPoint> _drawingPoint =
-    //     new CurvePainter().getDrawingPoints(_bodyWidth, _bodyHeight, 11);
-
-    // final listOfChildren = _drawingPoint
-    //     .map(
-    //       (e) => Positioned(
-    //         left: e.currentX,
-    //         top: e.currentY,
-    //         child: IconWidget(e.index),
-    //       ),
-    //     )
-    //     .toList();
-    // listOfChildren.insert(
-    //   0,
-    //   new Positioned(
-    //     child: CustomPaint(
-    //       painter: CurvePainter(),
-    //       size: Size(MediaQuery.of(context).size.width,
-    //           MediaQuery.of(context).size.height),
-    //     ),
-    //   ),
-    // );
     List<Widget> _segments = [
       Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.only(top: _bodyHeight * 0.01),
         color: Theme.of(context).primaryColor,
-        child: Column(
-          children: [
-            Container(
-              height: _mediaQuery.size.height * 0.25,
-              width: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    width: _mediaQuery.size.width,
-                    height: _mediaQuery.size.height * 0.05,
-                    alignment: Alignment.center,
-                    color: Theme.of(context).primaryColor,
-                    child: Card(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: _mediaQuery.size.height * 0.255,
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Container(
+                      width: _mediaQuery.size.width,
+                      height: _mediaQuery.size.height * 0.05,
+                      alignment: Alignment.center,
                       color: Theme.of(context).primaryColor,
-                      child: Text('placeholder'),
+                      child: Card(
+                        color: Theme.of(context).primaryColor,
+                        child: Text('placeholder'),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: _mediaQuery.size.height * 0.20,
-                    child: Card(
-                      color: Theme.of(context).primaryColorDark,
-                      child: Column(
-                        children: [
-                          Text('placeholder'),
-                          Container(
-                            height: _mediaQuery.size.height * 0.13,
-                            padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                            child: Card(
-                              color: Theme.of(context).primaryColorLight,
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text('placeholder'),
-                                    ),
-                                    Container(
-                                      child: Text('placeholder'),
-                                    ),
-                                  ]),
+                    Container(
+                      height: _mediaQuery.size.height * 0.20,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(_cornerRadius),
+                          ),
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: _mediaQuery.size.height * 0.05,
+                              child: Center(
+                                child: Text('placeholder'),
+                              ),
                             ),
-                          )
-                        ],
+                            Container(
+                              height: _mediaQuery.size.height * 0.13,
+                              padding: EdgeInsets.fromLTRB(
+                                _bodyWidth * 0.02,
+                                _bodyHeight * 0.01,
+                                _bodyWidth * 0.02,
+                                _bodyHeight * 0.01,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          height:
+                                              _mediaQuery.size.height * 0.11,
+                                          width: _mediaQuery.size.width * 0.4,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                  _cornerRadius),
+                                              bottomLeft: Radius.circular(
+                                                  _cornerRadius),
+                                            ),
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
+                                          ),
+                                          child: Center(
+                                            child: Text('placeholder'),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: _mediaQuery.size.width * 0.01,
+                                        ),
+                                        Container(
+                                          height:
+                                              _mediaQuery.size.height * 0.11,
+                                          width: _mediaQuery.size.width * 0.4,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(
+                                                  _cornerRadius),
+                                              bottomRight: Radius.circular(
+                                                  _cornerRadius),
+                                            ),
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
+                                          ),
+                                          child: Center(
+                                            child: Text('placeholder'),
+                                          ),
+                                        ),
+                                      ]),
+                                  Center(
+                                    child: CircleAvatar(
+                                      radius: _mediaQuery.size.width * 0.03,
+                                      backgroundColor:
+                                          Theme.of(context).primaryColorDark,
+                                      child: Text(
+                                        '=',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Container(
-                padding: EdgeInsets.only(
-                  top: 10,
+                  ],
                 ),
-                height: _mediaQuery.size.height * 0.41,
-                // width: double.infinity,
-                //color: Colors.purple,
-                child: totalDots.length == 0
-                    ? Container()
-                    : BlockListView(
-                        _bodyWidth,
-                        _bodyHeight,
-                        totalDots,
-                      ),
               ),
-            )
-          ],
+              Container(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    top: _bodyHeight * 0.02,
+                  ),
+                  height: totalDots.length == 0
+                      ? 0.45 * _bodyHeight
+                      : (totalDots.length ~/ 12 + 1) * _bodyHeight / 2.81,
+                  // width: double.infinity,
+                  //color: Colors.purple,
+                  child: totalDots.length == 0
+                      ? CupertinoActivityIndicator(
+                          radius: 40,
+                        )
+                      : BlockListView(
+                          _bodyWidth,
+                          _bodyHeight,
+                          totalDots,
+                        ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       Container(
@@ -196,61 +241,86 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottom: PreferredSize(
           preferredSize: Size(_bodyWidth, 0.05 * _bodyHeight),
-          child: CupertinoSegmentedControl<int>(
-            padding: EdgeInsets.all(8),
-            children: _label,
-            onValueChanged: (int val) {
-              setState(() {
-                _sharedValue = val;
-                print('$_sharedValue');
-              });
-            },
-            groupValue: _sharedValue,
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+              Radius.circular(60.0),
+            )),
+            child: CupertinoSegmentedControl<int>(
+              padding: EdgeInsets.all(_bodyHeight * 0.015),
+              children: _label,
+              onValueChanged: (int val) {
+                setState(() {
+                  _sharedValue = val;
+                  //     print('$_sharedValue');
+                });
+              },
+              groupValue: _sharedValue,
+            ),
           ),
         ),
       ),
       bottomNavigationBar: Container(
-        height: _mediaQuery.size.height * 0.12,
+        height: _mediaQuery.size.height * 0.08,
         child: Container(
-          padding: EdgeInsets.fromLTRB(20, 0, 4, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('lib/asset/Icon/medal.png'),
-                  Text('journey'),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('lib/asset/Icon/rewards.png'),
-                  Text('rewards'),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('lib/asset/Icon/exercise.png'),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('lib/asset/Icon/challenges.png'),
-                  Text('challenges'),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('lib/asset/Icon/profile.png'),
-                  Text('profile'),
-                ],
-              ),
-            ],
+          color: Colors.white,
+          child: Container(
+            padding:
+                EdgeInsets.fromLTRB(_bodyWidth * 0.01, 0, _bodyWidth * 0.01, 0),
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('lib/asset/Icon/medal.png'),
+                    Text('journey'),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('lib/asset/Icon/rewards.png'),
+                    Text('rewards'),
+                  ],
+                ),
+                Column(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('lib/asset/Icon/challenges.png'),
+                    Text('challenges'),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('lib/asset/Icon/profile.png'),
+                    Text('profile'),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: Align(
+        alignment: Alignment(0.1, 1.15),
+        child: SizedBox(
+          width: 0.12 * _bodyHeight,
+          height: 0.12 * _bodyHeight,
+          child: RawMaterialButton(
+            elevation: 0.0,
+            disabledElevation: 0.0,
+            focusElevation: 0.0,
+            highlightElevation: 0.0,
+            hoverElevation: 0.0,
+            onPressed: () {},
+            fillColor: Colors.white,
+            padding: EdgeInsets.all(0.006*_bodyHeight),
+            shape: CircleBorder(),
+            child: Image.asset('lib/asset/Icon/exercise@2x.png'),
           ),
         ),
       ),

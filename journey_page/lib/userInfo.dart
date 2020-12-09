@@ -40,6 +40,9 @@ class Dot {
         this.goalsPerWeek,
         this.rewardedDays,
         this.nextWeekStartOn,
+        // Customised property, not from json file
+        this.sequenceNum,
+        this.isDummy,
     });
 
     Type dotType;
@@ -52,7 +55,9 @@ class Dot {
     int goalsPerWeek;
     int rewardedDays;
     DateTime nextWeekStartOn;
+    // Customised property, not from json file
     int sequenceNum;
+    bool isDummy;
 
     void addSequenceNum(int seq){
       sequenceNum = seq;
@@ -85,7 +90,7 @@ class Dot {
     };
 }
 
-enum Type { DAILY, WEEKLY, TIER }
+enum Type { DAILY, WEEKLY, TIER, }
 
 final typeValues = EnumValues({
     "daily": Type.DAILY,
