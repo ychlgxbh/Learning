@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:journey_page/CurvePainter.dart';
 import 'package:journey_page/drawingPoint.dart';
+import 'package:journey_page/dummyRoute.dart';
 import 'package:journey_page/iconWidget.dart';
 import 'package:journey_page/journeyBlock.dart';
 import 'package:journey_page/blockListView.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         buttonBarTheme: ButtonBarThemeData(
-          alignment: MainAxisAlignment.center, 
+          alignment: MainAxisAlignment.center,
         ),
       ),
       home: MyHomePage(title: 'Journey page demo'),
@@ -70,6 +71,13 @@ class _MyHomePageState extends State<MyHomePage> {
   //   return rootBundle.loadString('lib/asset/jsons/journeyMap.json',
   //       cache: false);
   // }
+
+  void dummyRoute() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DummyRoute()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -346,34 +354,54 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('lib/asset/Icon/medal.png'),
-                    Text('journey'),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    dummyRoute();
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('lib/asset/Icon/medal.png'),
+                      Text('journey'),
+                    ],
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('lib/asset/Icon/rewards.png'),
-                    Text('rewards'),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    dummyRoute();
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('lib/asset/Icon/rewards.png'),
+                      Text('rewards'),
+                    ],
+                  ),
                 ),
                 Column(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('lib/asset/Icon/challenges.png'),
-                    Text('challenges'),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    dummyRoute();
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('lib/asset/Icon/challenges.png'),
+                      Text('challenges'),
+                    ],
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('lib/asset/Icon/profile.png'),
-                    Text('profile'),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    dummyRoute();
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('lib/asset/Icon/profile.png'),
+                      Text('profile'),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -391,7 +419,9 @@ class _MyHomePageState extends State<MyHomePage> {
             focusElevation: 0.0,
             highlightElevation: 0.0,
             hoverElevation: 0.0,
-            onPressed: () {},
+            onPressed: () {
+              dummyRoute();
+            },
             fillColor: Colors.white,
             padding: EdgeInsets.all(0.006 * _bodyHeight),
             shape: CircleBorder(),
