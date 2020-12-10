@@ -269,7 +269,7 @@ class CurvePainter extends CustomPainter {
           path.conicTo(
             4.8 * _width / 8,
             23.2 / 8 * _height / 8,
-            3.8 * _width / 8,
+            3.9 * _width / 8,
             23.38 / 8 * _height / 8,
             _conicWeight,
           );
@@ -278,7 +278,7 @@ class CurvePainter extends CustomPainter {
           dashedPath.conicTo(
             4.8 * _width / 8,
             23.2 / 8 * _height / 8,
-            3.8 * _width / 8,
+            3.9 * _width / 8,
             23.38 / 8 * _height / 8,
             _conicWeight,
           );
@@ -311,7 +311,7 @@ class CurvePainter extends CustomPainter {
           );
         }
 
-        _pathStartX = 3 * _width / 8;
+        _pathStartX = 3.0 * _width / 8;
         _pathStartY = 23.8 / 8 * _height / 8;
 
         //print('10th segment');

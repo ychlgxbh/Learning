@@ -123,7 +123,8 @@ enum Status { TICK, CURRENT_LOCK, LOCK, FAIL }
 final statusValues = EnumValues({
     "current_lock": Status.CURRENT_LOCK,
     "lock": Status.LOCK,
-    "tick": Status.TICK
+    "tick": Status.TICK,
+    "fail": Status.FAIL,
 });
 
 class EnumValues<T> {

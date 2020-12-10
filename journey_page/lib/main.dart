@@ -9,6 +9,7 @@ import 'package:journey_page/iconWidget.dart';
 import 'package:journey_page/journeyBlock.dart';
 import 'package:journey_page/blockListView.dart';
 import 'package:journey_page/userInfo.dart';
+import 'package:material_segmented_control/material_segmented_control.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        buttonBarTheme: ButtonBarThemeData(
+          alignment: MainAxisAlignment.center, 
+        ),
       ),
       home: MyHomePage(title: 'Journey page demo'),
     );
@@ -41,8 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _sharedValue = 0;
   final _cornerRadius = 20.0;
   final Map<int, Widget> _label = <int, Widget>{
-    0: Text('       Journey Map       '),
-    1: Text('       Activity       '),
+    0: Text('          Journey Map          '),
+    1: Text('          Activity          '),
   };
   List<Dot> totalDots = [];
   @override
@@ -96,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
+                      padding: EdgeInsets.all(_mediaQuery.size.height * 0.01),
                       height: _mediaQuery.size.height * 0.20,
                       child: Container(
                         decoration: BoxDecoration(
@@ -109,7 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             Container(
                               height: _mediaQuery.size.height * 0.05,
                               child: Center(
-                                child: Text('placeholder'),
+                                child: Text(
+                                  'TODAY\'S GOAL',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                             Container(
@@ -128,8 +138,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       children: <Widget>[
                                         Container(
                                           height:
-                                              _mediaQuery.size.height * 0.11,
-                                          width: _mediaQuery.size.width * 0.4,
+                                              _mediaQuery.size.height * 0.12,
+                                          width: _mediaQuery.size.width * 0.43,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(
@@ -137,11 +147,40 @@ class _MyHomePageState extends State<MyHomePage> {
                                               bottomLeft: Radius.circular(
                                                   _cornerRadius),
                                             ),
-                                            color: Theme.of(context)
-                                                .primaryColorLight,
+                                            color: Color(0xFF53ABCF),
                                           ),
                                           child: Center(
-                                            child: Text('placeholder'),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'COMPLETED',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: Colors.white70,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '0 OF 50',
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'REPS',
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         SizedBox(
@@ -149,8 +188,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         ),
                                         Container(
                                           height:
-                                              _mediaQuery.size.height * 0.11,
-                                          width: _mediaQuery.size.width * 0.4,
+                                              _mediaQuery.size.height * 0.115,
+                                          width: _mediaQuery.size.width * 0.43,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(
@@ -158,11 +197,40 @@ class _MyHomePageState extends State<MyHomePage> {
                                               bottomRight: Radius.circular(
                                                   _cornerRadius),
                                             ),
-                                            color: Theme.of(context)
-                                                .primaryColorLight,
+                                            color: Color(0xFF53ABCF),
                                           ),
                                           child: Center(
-                                            child: Text('placeholder'),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'EARN',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: Colors.white70,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '10',
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'COINS',
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ]),
@@ -246,16 +314,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.all(
               Radius.circular(60.0),
             )),
-            child: CupertinoSegmentedControl<int>(
-              padding: EdgeInsets.all(_bodyHeight * 0.015),
-              children: _label,
-              onValueChanged: (int val) {
-                setState(() {
-                  _sharedValue = val;
-                  //     print('$_sharedValue');
-                });
-              },
-              groupValue: _sharedValue,
+            child: SizedBox(
+              width: 0.95 * _bodyWidth,
+              child: Container(
+                padding: EdgeInsets.all(_bodyHeight * 0.015),
+                child: MaterialSegmentedControl(
+                  verticalOffset: 0.0,
+                  children: _label,
+                  selectionIndex: _sharedValue,
+                  onSegmentChosen: (int value) {
+                    setState(() {
+                      _sharedValue = value;
+                    });
+                  },
+                  selectedColor: Theme.of(context).primaryColor,
+                  unselectedColor: Colors.white,
+                ),
+              ),
             ),
           ),
         ),
@@ -266,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.white,
           child: Container(
             padding:
-                EdgeInsets.fromLTRB(_bodyWidth * 0.01, 0, _bodyWidth * 0.01, 0),
+                EdgeInsets.fromLTRB(_bodyWidth * 0.02, 0, _bodyWidth * 0.02, 0),
             color: Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -306,10 +381,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: Align(
-        alignment: Alignment(0.1, 1.15),
+        alignment: Alignment(0.1, 1.17),
         child: SizedBox(
-          width: 0.12 * _bodyHeight,
-          height: 0.12 * _bodyHeight,
+          width: 0.11 * _bodyHeight,
+          height: 0.11 * _bodyHeight,
           child: RawMaterialButton(
             elevation: 0.0,
             disabledElevation: 0.0,
@@ -318,7 +393,7 @@ class _MyHomePageState extends State<MyHomePage> {
             hoverElevation: 0.0,
             onPressed: () {},
             fillColor: Colors.white,
-            padding: EdgeInsets.all(0.006*_bodyHeight),
+            padding: EdgeInsets.all(0.006 * _bodyHeight),
             shape: CircleBorder(),
             child: Image.asset('lib/asset/Icon/exercise@2x.png'),
           ),

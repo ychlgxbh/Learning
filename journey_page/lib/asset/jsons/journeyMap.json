@@ -47,7 +47,7 @@
     },
     {
       "dot_type": "daily",
-      "status": "tick",
+      "status": "fail",
       "reward": [
         {
           "reward_type": "daily",
