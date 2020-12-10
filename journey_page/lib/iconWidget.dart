@@ -85,8 +85,8 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
       switch (widget.index) {
         case 0:
           _coordinateX = widget.dot.sequenceNum == 0
-              ? 0.8 * widget.totalWidth / 8
-              : 0.75 * widget.totalWidth / 8;
+              ? 0.7 * widget.totalWidth / 8
+              : 0.65 * widget.totalWidth / 8;
           _coordinateY = widget.dot.sequenceNum == 0
               ? 0.0
               : -2 / 8 * widget.totalHeight / 8;
@@ -108,16 +108,16 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
           _coordinateY = 6.0 / 8 * widget.totalHeight / 8;
           break;
         case 5:
-          _coordinateX = 5.85 * widget.totalWidth / 8;
-          _coordinateY = 8.0 / 8 * widget.totalHeight / 8;
+          _coordinateX = 5.75 * widget.totalWidth / 8;
+          _coordinateY = 7.8 / 8 * widget.totalHeight / 8;
           break;
         case 6:
-          _coordinateX = 6.55 * widget.totalWidth / 8;
+          _coordinateX = 6.45 * widget.totalWidth / 8;
           _coordinateY = 13.8 / 8 * widget.totalHeight / 8;
           break;
         case 7:
           _coordinateX = 5.85 * widget.totalWidth / 8;
-          _coordinateY = 19.6 / 8 * widget.totalHeight / 8;
+          _coordinateY = 19 / 8 * widget.totalHeight / 8;
           break;
         case 8:
           _coordinateX = 4.7 * widget.totalWidth / 8;

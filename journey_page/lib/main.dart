@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           alignment: MainAxisAlignment.center,
         ),
       ),
-      home: MyHomePage(title: 'Journey page demo'),
+      home: MyHomePage(title: 'Journey Page Demo'),
     );
   }
 }

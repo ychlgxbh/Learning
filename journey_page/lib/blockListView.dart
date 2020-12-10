@@ -42,11 +42,6 @@ class _BlockListViewState extends State<BlockListView> {
     invisibleItemsThreshold: 1,
   );
 
-  // Future<String> loadAsset() async {
-  //   print('in loadasset');
-  //   return await rootBundle.loadString('lib/asset/jsons/journeyMap.json');
-  // }
-
   void getDotList() {
     int index = 0;
     while (true) {
