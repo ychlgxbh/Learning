@@ -62,16 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+// Transform a json file into a json string
   Future<String> loadAsset() async {
     //print('in loadasset');
     return await rootBundle.loadString('lib/asset/jsons/journeyMap.json');
   }
 
-  // Future<String> loadAsset() async {
-  //   return rootBundle.loadString('lib/asset/jsons/journeyMap.json',
-  //       cache: false);
-  // }
-
+// Redirecto to a dummy page
   void dummyRoute() {
     Navigator.push(
       context,
@@ -85,7 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
     final _bodyHeight = _mediaQuery.size.height;
     final _bodyWidth = _mediaQuery.size.width;
 
+// Content of different element of the segmented control in body, should be moved
+// to an individual file later
     List<Widget> _segments = [
+      // Structure of the body part the journey map page
       Container(
         padding: EdgeInsets.only(top: _bodyHeight * 0.01),
         color: Theme.of(context).primaryColor,
@@ -97,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: double.infinity,
                 child: Column(
                   children: [
+                    // space reserved for one-line ads
                     Container(
                       width: _mediaQuery.size.width,
                       height: _mediaQuery.size.height * 0.05,
@@ -107,6 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text('placeholder'),
                       ),
                     ),
+
+                    // info board
                     Container(
                       padding: EdgeInsets.all(_mediaQuery.size.height * 0.01),
                       height: _mediaQuery.size.height * 0.20,
@@ -119,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: Column(
                           children: [
+                            // Title of the info board
                             Container(
                               height: _mediaQuery.size.height * 0.05,
                               child: Center(
@@ -130,6 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                             ),
+                            // Content of the info board
                             Container(
                               height: _mediaQuery.size.height * 0.13,
                               padding: EdgeInsets.fromLTRB(
@@ -265,6 +270,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
+
+              // Space to show the journey map
               Container(
                 child: Container(
                   padding: EdgeInsets.only(
@@ -273,8 +280,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: totalDots.length == 0
                       ? 0.45 * _bodyHeight
                       : (totalDots.length ~/ 12 + 1) * _bodyHeight / 2.81,
-                  // width: double.infinity,
-                  //color: Colors.purple,
+              
+              //Should be removed in actual app as the loading happens at the start
                   child: totalDots.length == 0
                       ? CupertinoActivityIndicator(
                           radius: 40,
@@ -290,6 +297,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+
+      // The activity page, not yet built
       Container(
         child: Center(
           child: Text(
@@ -304,6 +313,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
     return Scaffold(
       body: _segments[_sharedValue],
+      // Implementation of the appBar
+      // Should be moved to an individual file
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Container(
@@ -343,6 +354,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+
+      // Implementation of the bottom nav bar
+      // Should be moved to an individual file
       bottomNavigationBar: Container(
         height: _mediaQuery.size.height * 0.08,
         child: Container(
